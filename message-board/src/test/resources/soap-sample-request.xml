@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<createMessageRequest
+	xmlns="http://www.abudko.com/message-board" 
+	title="Request1"
+	content="Hello" 
+	sender="author" 
+	url="http://www"/>

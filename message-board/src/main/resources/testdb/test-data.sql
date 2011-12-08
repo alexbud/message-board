@@ -1,0 +1,4 @@
+insert into T_MESSAGE (PRINCIPAL, TS, TITLE, CONTENT, SENDER, URL) values ('admin', now(), 'message one', 'Hello message 1', 'Keith', 'http://www.hotmail.com/one');
+insert into T_MESSAGE (PRINCIPAL, TS, TITLE, CONTENT, SENDER, URL) values ('admin', now(), 'message two', 'Hello message 2', 'Keri', 'http://www.hotmail.com/two');
+insert into T_MESSAGE (PRINCIPAL, TS, TITLE, CONTENT, SENDER, URL) values ('admin', now(), 'message three', 'Hello message 3', 'David', 'http://www.hotmail.com/three');
+insert into T_MESSAGE (PRINCIPAL, TS, TITLE, CONTENT, SENDER, URL) values ('admin', now(), 'message four', 'Hello message 4', 'Tom', 'http://www.hotmail.com/four');

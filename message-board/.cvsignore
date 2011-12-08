@@ -1,0 +1,11 @@
+target
+WebContent
+bin
+build.properties
+*.log
+uml
+.classpath
+.project
+.settings
+.pmd
+.springBeans
