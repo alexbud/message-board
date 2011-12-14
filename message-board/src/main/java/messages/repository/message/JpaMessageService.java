@@ -1,15 +1,13 @@
-package messages.repository;
+package messages.repository.message;
 
 import java.sql.Timestamp;
 import java.util.List;
 
-import javax.annotation.security.RolesAllowed;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
 import messages.orm.Message;
 
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -25,7 +23,7 @@ public class JpaMessageService implements MessageService {
 	private EntityManager entityManager;
 
 	/**
-	 * @see messages.repository.MessageService#getAllMessages()
+	 * @see messages.repository.message.MessageService#getAllMessages()
 	 */
 	@Transactional(readOnly = true)
 	@SuppressWarnings("unchecked")
@@ -34,7 +32,7 @@ public class JpaMessageService implements MessageService {
 	}
 
 	/**
-	 * @see messages.repository.MessageService#getMessage(java.lang.Integer)
+	 * @see messages.repository.message.MessageService#getMessage(java.lang.Integer)
 	 */
 	@Transactional(readOnly = true)
 	public Message getMessage(Integer id) {
@@ -42,10 +40,9 @@ public class JpaMessageService implements MessageService {
 	}
 
 	/**
-	 * @see messages.repository.MessageService#create(messages.orm.Message)
+	 * @see messages.repository.message.MessageService#create(messages.orm.Message)
 	 */
 	@Transactional
-	@RolesAllowed("ROLE_MEMBER")
 	public void create(Message message) {
 		String principal = SecurityContextHolder.getContext()
 				.getAuthentication().getName();
@@ -56,20 +53,18 @@ public class JpaMessageService implements MessageService {
 	}
 
 	/**
-	 * @see messages.repository.MessageService#remove(messages.orm.Message)
+	 * @see messages.repository.message.MessageService#remove(messages.orm.Message)
 	 */
 	@Transactional
-	@PreAuthorize("(hasRole('ROLE_ADMIN')) or (#message.principal == principal.username)")
 	public void remove(Message message) {
 		this.entityManager.remove(message);
 		this.entityManager.flush();
 	}
 
 	/**
-	 * @see messages.repository.MessageService#update(messages.orm.Message)
+	 * @see messages.repository.message.MessageService#update(messages.orm.Message)
 	 */
 	@Transactional
-	@PreAuthorize("(hasRole('ROLE_ADMIN')) or (#message.principal == principal.username)")
 	public void update(Message message) {
 		String principal = SecurityContextHolder.getContext()
 				.getAuthentication().getName();

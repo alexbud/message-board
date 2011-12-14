@@ -1,15 +1,12 @@
-package messages.repository;
+package messages.repository.message;
 
 import java.sql.Timestamp;
 import java.util.List;
-
-import javax.annotation.security.RolesAllowed;
 
 import messages.orm.Message;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -35,7 +32,7 @@ public class HibernateMessageService implements MessageService {
 	}
 
 	/**
-	 * @see messages.repository.MessageService#getAllMessages()
+	 * @see messages.repository.message.MessageService#getAllMessages()
 	 */
 	@Transactional(readOnly = true)
 	@SuppressWarnings("unchecked")
@@ -44,7 +41,7 @@ public class HibernateMessageService implements MessageService {
 	}
 
 	/**
-	 * @see messages.repository.MessageService#getMessage(java.lang.Integer)
+	 * @see messages.repository.message.MessageService#getMessage(java.lang.Integer)
 	 */
 	@Transactional(readOnly = true)
 	public Message getMessage(Integer id) {
@@ -52,10 +49,9 @@ public class HibernateMessageService implements MessageService {
 	}
 
 	/**
-	 * @see messages.repository.MessageService#create(messages.orm.Message)
+	 * @see messages.repository.message.MessageService#create(messages.orm.Message)
 	 */
 	@Transactional
-	@RolesAllowed("ROLE_MEMBER")
 	public void create(Message message) {
 		String principal = SecurityContextHolder.getContext()
 				.getAuthentication().getName();
@@ -66,20 +62,18 @@ public class HibernateMessageService implements MessageService {
 	}
 
 	/**
-	 * @see messages.repository.MessageService#remove(messages.orm.Message)
+	 * @see messages.repository.message.MessageService#remove(messages.orm.Message)
 	 */
 	@Transactional
-	@PreAuthorize("(hasRole('ROLE_ADMIN')) or (#message.principal == principal.username)")
 	public void remove(Message message) {
 		this.getCurrentSession().delete(message);
 		this.getCurrentSession().flush();
 	}
 
 	/**
-	 * @see messages.repository.MessageService#update(messages.orm.Message)
+	 * @see messages.repository.message.MessageService#update(messages.orm.Message)
 	 */
 	@Transactional
-	@PreAuthorize("(hasRole('ROLE_ADMIN')) or (#message.principal == principal.username)")
 	public void update(Message message) {
 		String principal = SecurityContextHolder.getContext()
 				.getAuthentication().getName();
@@ -90,11 +84,11 @@ public class HibernateMessageService implements MessageService {
 	}
 
 	/**
-	 * Returns the session associated with the ongoing reward transaction.
+	 * Returns the session associated with the ongoing message transaction.
 	 * 
 	 * @return the transactional session
 	 */
 	protected Session getCurrentSession() {
-		return sessionFactory.getCurrentSession();
+		return this.sessionFactory.getCurrentSession();
 	}
 }

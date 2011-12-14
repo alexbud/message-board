@@ -18,17 +18,24 @@
 
 <h1>Message Summary</h1>
 
-<ul>
-	<c:forEach items="${messages}" var="message">
-		<li><a href="messageDetails?entityId=${message.entityId}">${message.title} (<fmt:formatDate value="${message.timestamp}" type="both"/>)</a></li>
-	</c:forEach>
-</ul>
-
+<p>
 <security:authorize access="hasRole('ROLE_MEMBER')">
-	<p><a href="<%= request.getContextPath() %>/board/messages/createMessage"><input type="button" value="Create"></a></p>
+	<a href="<%= request.getContextPath() %>/board/messages/createMessage"><input type="button" value="Create Message"/></a>
+	<a href="<%= request.getContextPath() %>/board/users/userDetails?username=<security:authentication property="principal.username"/>"><input type="button" value="User Details"/></a>
 </security:authorize>
 
-<p><a href="<c:url value="/board/messages/j_spring_security_logout"/>">Logout</a> (<security:authentication property="principal.username"/>)</p>
+<security:authorize access="hasRole('ROLE_ADMIN')">
+	<a href="<%= request.getContextPath() %>/board/users/userSummary"><input type="button" value="User Summary"/></a>
+</security:authorize>
+
+<a href="<c:url value="/board/messages/j_spring_security_logout"/>"><input type="button" value="Logout (<security:authentication property="principal.username"/>)"/></a>
+</p>
+
+<ul>
+	<c:forEach items="${messages}" var="message">
+		<li><a href="messageDetails?entityId=${message.entityId}">${message.title} (<fmt:formatDate value="${message.timestamp}" type="both"/>) --- ${message.principal}</a></li>
+	</c:forEach>
+</ul>
 
 </div>
 </body>

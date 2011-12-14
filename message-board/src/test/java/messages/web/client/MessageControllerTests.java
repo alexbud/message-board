@@ -8,7 +8,7 @@ import static org.junit.Assert.fail;
 import java.util.List;
 
 import messages.orm.Message;
-import messages.repository.MessageService;
+import messages.repository.message.MessageService;
 import messages.web.MessageController;
 
 import org.junit.Before;
@@ -42,12 +42,15 @@ public class MessageControllerTests {
 
 	private MessageController controller;
 
+	/**
+	 * Test setup.
+	 */
 	@Before
 	public void setUp() {
 		this.controller = new MessageController(this.messageService,
 				this.mailSender);
 		SecurityContextHolder.getContext().setAuthentication(
-				new UsernamePasswordAuthenticationToken("admin", "admin"));
+				new UsernamePasswordAuthenticationToken("admin", "password"));
 	}
 
 	/**
@@ -119,7 +122,7 @@ public class MessageControllerTests {
 		Message retrievedMessage = (Message) model.get("message");
 		assertEquals(message.getTitle(), retrievedMessage.getTitle());
 		assertEquals(message.getContent(), retrievedMessage.getContent());
-		assertEquals(message.getSender(), retrievedMessage.getSender());
+		assertEquals(message.getPrincipal(), retrievedMessage.getPrincipal());
 		assertEquals(message.getUrl(), retrievedMessage.getUrl());
 		assertEquals(message.getEntityId(), retrievedMessage.getEntityId());
 		assertNotNull(message.getTimestamp());
@@ -182,7 +185,7 @@ public class MessageControllerTests {
 
 	/**
 	 * Test for
-	 * {@link MessageController#messageSummary(int, org.springframework.ui.Model)}
+	 * {@link MessageController#messageSummary(org.springframework.ui.Model)}
 	 */
 	@SuppressWarnings("unchecked")
 	@Test

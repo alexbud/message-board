@@ -13,6 +13,9 @@ import java.util.List;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
+/**
+ * Messages list. Short version {@link MessageResponseShort}.
+ */
 @XmlRootElement
 public class MessagesListShort extends ArrayList<MessageResponseShort> {
 
@@ -21,14 +24,24 @@ public class MessagesListShort extends ArrayList<MessageResponseShort> {
 	 */
 	private static final long serialVersionUID = 1L;
 
+	/**
+	 * 
+	 */
 	public MessagesListShort() {
 
 	}
 
+	/**
+	 * @param list
+	 *            of messages
+	 */
 	public MessagesListShort(List<MessageResponseShort> messages) {
 		this.addAll(messages);
 	}
 
+	/**
+	 * @return list of messages
+	 */
 	@XmlElement(name = "message")
 	public List<MessageResponseShort> getMessages() {
 		return this;

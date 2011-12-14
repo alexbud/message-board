@@ -21,7 +21,7 @@ public class MessageRequestConverterUtils {
 		MessageResponseShort messageResponseShort = new MessageResponseShort();
 		messageResponseShort.setTitle(message.getTitle());
 		messageResponseShort.setContent(message.getContent());
-		messageResponseShort.setSender(message.getSender());
+		messageResponseShort.setPrincipal(message.getPrincipal());
 		return messageResponseShort;
 	}
 
@@ -37,7 +37,7 @@ public class MessageRequestConverterUtils {
 		messageResponseFull.setId(message.getEntityId().toString());
 		messageResponseFull.setTitle(message.getTitle());
 		messageResponseFull.setContent(message.getContent());
-		messageResponseFull.setSender(message.getSender());
+		messageResponseFull.setPrincipal(message.getPrincipal());
 		messageResponseFull.setUrl(message.getUrl());
 		return messageResponseFull;
 	}

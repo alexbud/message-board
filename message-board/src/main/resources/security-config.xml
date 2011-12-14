@@ -5,7 +5,18 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-3.1.xsd
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.1.xsd">
 
-	<!-- UI security -->
+	<!-- UI users security -->
+	<security:http use-expressions="true" access-denied-page="/board/denied.htm" pattern="/board/users/**">
+		<security:form-login login-page="/board/login.htm" authentication-failure-url="/board/login.htm?login_error=true" login-processing-url="/board/messages/j_spring_security_check"/>
+		<security:intercept-url pattern="/board/users/createUser*" access="permitAll"/>
+		<security:intercept-url pattern="/board/users/editUser*" access="hasRole('ROLE_MEMBER')"/>
+		<security:intercept-url pattern="/board/users/userSummary" access="hasRole('ROLE_ADMIN')"/>
+		<security:intercept-url pattern="/board/users/removeUser*" access="hasRole('ROLE_ADMIN')"/>
+		<security:intercept-url pattern="/board/users/**" access="isAuthenticated()"/>
+		<security:logout logout-url="/board/users/j_spring_security_logout"/>
+	</security:http>
+
+	<!-- UI messages security -->
 	<security:http use-expressions="true" access-denied-page="/board/denied.htm" pattern="/board/messages/**">
 		<security:form-login login-page="/board/login.htm" authentication-failure-url="/board/login.htm?login_error=true" login-processing-url="/board/messages/j_spring_security_check"/>
 		<security:intercept-url pattern="/board/messages/createMessage*" access="hasRole('ROLE_MEMBER')"/>
@@ -39,13 +50,28 @@
 	<security:http use-expressions="true" pattern="/board-ws/**" create-session="stateless">
 		<security:http-basic/>
 	</security:http>
-    
-    <security:authentication-manager>
-		<security:authentication-provider>
-			<security:user-service properties="classpath:/users/users.properties" />
-		</security:authentication-provider>
-	</security:authentication-manager>
 	
 	<security:global-method-security jsr250-annotations="enabled" pre-post-annotations="enabled"/>
-
+	
+	<beans profile="dev">
+    	<security:authentication-manager>
+			<security:authentication-provider>
+				<security:jdbc-user-service data-source-ref="dataSource" 
+					users-by-username-query="SELECT username, password, 1 AS enabled FROM t_user WHERE username = ?"
+                	authorities-by-username-query="SELECT username, authority FROM t_authorities WHERE username = ?"/>
+			</security:authentication-provider>
+		</security:authentication-manager>
+	</beans>
+    
+    <beans profile="production">
+    	<security:authentication-manager>
+			<security:authentication-provider>
+				<security:password-encoder hash="sha-256" base64="true"/>
+				<security:jdbc-user-service data-source-ref="dataSource" 
+					users-by-username-query="SELECT username, password, 1 AS enabled FROM t_user WHERE username = ?"
+                	authorities-by-username-query="SELECT username, authority FROM t_authorities WHERE username = ?"/>
+			</security:authentication-provider>
+		</security:authentication-manager>
+	</beans>
+	
 </beans>

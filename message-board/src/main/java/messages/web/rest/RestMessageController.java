@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 import messages.orm.Message;
-import messages.repository.MessageService;
+import messages.repository.message.MessageService;
 import messages.util.MessageRequestConverterUtils;
 import messages.ws.types.MessageResponseFull;
 import messages.ws.types.MessageResponseShort;

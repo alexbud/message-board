@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <project name="message-board" default="generate-sources">
 
-    <property name="src.dir" value="src/main/java"/>
+    <property name="src.dir" value="${basedir}/src/main/java"/>
 
     <property name="repository.dir" value="${basedir}/../../repository"/>
 
@@ -9,7 +9,7 @@
 
       <exec executable="xjc">
 
-            <arg line=" -d ${src.dir} -p messages.ws.types   src/main/webapp/WEB-INF/schemas/message-board.xsd"/>
+            <arg line=" -d ${src.dir} -p messages.ws.types   ${basedir}/src/main/webapp/WEB-INF/schemas/message-board.xsd"/>
 
       </exec>
 

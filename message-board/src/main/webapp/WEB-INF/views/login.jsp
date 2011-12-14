@@ -38,6 +38,8 @@
 	</table>
 </form>
 
+<a href="<%= request.getContextPath() %>/board/users/createUser"><input type="button" value="Register"></a>
+
 </div>
 </body>
 

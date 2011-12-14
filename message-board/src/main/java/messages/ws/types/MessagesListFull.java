@@ -13,6 +13,9 @@ import java.util.List;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
+/**
+ * Messages list. Full version {@link MessageResponseFull}.
+ */
 @XmlRootElement
 public class MessagesListFull extends ArrayList<MessageResponseFull> {
 
@@ -21,14 +24,24 @@ public class MessagesListFull extends ArrayList<MessageResponseFull> {
 	 */
 	private static final long serialVersionUID = 1L;
 
+	/**
+	 * 
+	 */
 	public MessagesListFull() {
 
 	}
 
+	/**
+	 * @param list
+	 *            of messages
+	 */
 	public MessagesListFull(List<MessageResponseFull> messages) {
 		this.addAll(messages);
 	}
 
+	/**
+	 * @return list of messages
+	 */
 	@XmlElement(name = "message")
 	public List<MessageResponseFull> getMessages() {
 		return this;

@@ -16,7 +16,6 @@
 		<xs:complexType>
 			<xs:attribute name="title" use="required" type="xs:string" />
 			<xs:attribute name="content" type="xs:string" />
-			<xs:attribute name="sender" type="xs:string" />
 			<xs:attribute name="url" type="xs:string" />
 		</xs:complexType>
 	</xs:element>
@@ -29,7 +28,7 @@
 		<xs:complexType>
 			<xs:attribute name="title" type="xs:string" />
 			<xs:attribute name="content" type="xs:string" />
-			<xs:attribute name="sender" type="xs:string" />
+			<xs:attribute name="principal" type="xs:string" />
 		</xs:complexType>
 	</xs:element>
 
@@ -42,7 +41,7 @@
 			<xs:attribute name="id" type="xs:string" />
 			<xs:attribute name="title" type="xs:string" />
 			<xs:attribute name="content" type="xs:string" />
-			<xs:attribute name="sender" type="xs:string" />
+			<xs:attribute name="principal" type="xs:string" />
 			<xs:attribute name="url" type="xs:string" />
 		</xs:complexType>
 	</xs:element>

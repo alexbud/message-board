@@ -5,7 +5,7 @@ import java.util.List;
 import javax.validation.Valid;
 
 import messages.orm.Message;
-import messages.repository.MessageService;
+import messages.repository.message.MessageService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.MailSender;
@@ -125,7 +125,7 @@ public class MessageController {
 			return "messageForm";
 		}
 		this.messageService.create(message);
-		this.sendEmail(message);
+		// this.sendEmail(message);
 		return "redirect:/board/messages/messageDetails?entityId="
 				+ message.getEntityId();
 	}

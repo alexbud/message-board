@@ -37,10 +37,6 @@ public class Message {
 	@Length(max = 140, message = "Max length for content field is 140")
 	private String content;
 
-	@Column(name = "SENDER")
-	@Length(max = 25, message = "Max length for content field is 25")
-	private String sender;
-
 	@Column(name = "URL")
 	@Url(message = "Invalid URL. Must start with http://")
 	private String url;
@@ -48,9 +44,15 @@ public class Message {
 	@Column(name = "PRINCIPAL")
 	private String principal;
 
+	/**
+	 * 
+	 */
 	public Message() {
 	}
 
+	/**
+	 * @param title
+	 */
 	public Message(String title) {
 		this.title = title;
 	}
@@ -147,23 +149,6 @@ public class Message {
 	}
 
 	/**
-	 * @return sender The sender for this message
-	 */
-	public String getSender() {
-		return sender;
-	}
-
-	/**
-	 * Sets the sender for this message.
-	 * 
-	 * @param sender
-	 *            The title for this message
-	 */
-	public void setSender(String sender) {
-		this.sender = sender;
-	}
-
-	/**
 	 * @return url The url for this message
 	 */
 	public String getUrl() {
@@ -183,6 +168,6 @@ public class Message {
 	public String toString() {
 		return "Id = " + entityId + ", time = " + timestamp + ", principal = "
 				+ principal + ", title = " + title + ", content = " + content
-				+ ", sender = " + sender + ", url = " + url;
+				+ ", url = " + url;
 	}
 }

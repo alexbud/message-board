@@ -9,7 +9,11 @@
 
 	<beans profile="hibernate">
 		<!-- The message service service that can load messages from the database -->
-		<bean id="messageService" class="messages.repository.HibernateMessageService">
+		<bean id="messageService" class="messages.repository.message.HibernateMessageService">
+			<constructor-arg ref="sessionFactory" />
+		</bean>
+		<!-- The user account service that can load user accounts from the database -->
+		<bean id="userAccountService" class="messages.repository.user.HibernateUserAccountService">
 			<constructor-arg ref="sessionFactory" />
 		</bean>
 
@@ -18,9 +22,9 @@
 		<bean id="sessionFactory"
 			class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean">
 			<property name="dataSource" ref="dataSource" />
-			<property name="annotatedClasses">
+			<property name="packagesToScan">
 				<list>
-					<value>messages.orm.Message</value>
+					<value>messages.orm</value>
 				</list>
 			</property>
 		</bean>
@@ -33,8 +37,10 @@
 	</beans>
 
 	<beans profile="jpa, cloud">
-		<!-- The message service service that can load messages from the database -->
-		<bean id="messageService" class="messages.repository.JpaMessageService" />
+		<!-- The message service that can load messages from the database -->
+		<bean id="messageService" class="messages.repository.message.JpaMessageService" />
+		<!-- The user account service that can load user accounts from the database -->
+		<bean id="userAccountService" class="messages.repository.user.JpaUserAccountService" />
 
 		<!-- A JPA EntityManagerFactory for mapping Messages from object to relation 
 			tables -->

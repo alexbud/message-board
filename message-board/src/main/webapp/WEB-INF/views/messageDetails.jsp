@@ -35,7 +35,7 @@
 			</tr>
 			<tr>
 				<td>Sender:</td>
-				<td>${message.sender}</td>
+				<td>${message.principal}</td>
 			</tr>
 			<tr>
 				<td>URL:</td>
@@ -49,20 +49,19 @@
 <security:authentication var="principal" property="principal.username"/>
 <c:choose>
 	<c:when test="${message.principal == principal}">
-		<a href="<%= request.getContextPath() %>/board/messages/editMessage?entityId=${message.entityId}"><input type="button" value="Edit"></a>
-		<a href="<%= request.getContextPath() %>/board/messages/removeMessage?entityId=${message.entityId}"><input type="button" value="Delete"></a>
+		<a href="<%= request.getContextPath() %>/board/messages/editMessage?entityId=${message.entityId}"><input type="button" value="Edit"/></a>
+		<a href="<%= request.getContextPath() %>/board/messages/removeMessage?entityId=${message.entityId}"><input type="button" value="Delete"/></a>
 	</c:when>
 	<c:otherwise>
 		<security:authorize access="hasRole('ROLE_ADMIN')">
-			<a href="<%= request.getContextPath() %>/board/messages/editMessage?entityId=${message.entityId}"><input type="button" value="Edit"></a>
-			<a href="<%= request.getContextPath() %>/board/messages/removeMessage?entityId=${message.entityId}"><input type="button" value="Delete"></a>
+			<a href="<%= request.getContextPath() %>/board/messages/editMessage?entityId=${message.entityId}"><input type="button" value="Edit"/></a>
+			<a href="<%= request.getContextPath() %>/board/messages/removeMessage?entityId=${message.entityId}"><input type="button" value="Delete"/></a>
 		</security:authorize>
 	</c:otherwise>
 </c:choose>
-<a href="<%= request.getContextPath() %>/board/messages/messageSummary"><input type="button" value="Summary"></a>
+<a href="<%= request.getContextPath() %>/board/messages/messageSummary"><input type="button" value="Message Summary"/></a>
+<a href="<c:url value="/board/messages/j_spring_security_logout"/>"><input type="button" value="Logout (<security:authentication property="principal.username"/>)"/></a>
 </p>
-
-<p><a href="<c:url value="/board/messages/j_spring_security_logout"/>">Logout</a> (${principal})</p>
 
 </div>
 </body>

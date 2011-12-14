@@ -23,8 +23,9 @@
 			<property name="password" value="changeit" />
 		</bean>
 
-		<jdbc:initialize-database data-source="dataSource">
+		<jdbc:initialize-database data-source="dataSource" ignore-failures="ALL">
 			<jdbc:script location="classpath:/productiondb/schema.sql" />
+			<jdbc:script location="classpath:/productiondb/init-data.sql" />
 		</jdbc:initialize-database>
 	</beans>
 	
@@ -32,6 +33,7 @@
 		<cloud:data-source id="dataSource" service-name="messagesMySQLservice"/>
 		<jdbc:initialize-database data-source="dataSource">
 			<jdbc:script location="classpath:/productiondb/schema.sql" />
+			<jdbc:script location="classpath:/productiondb/init-data.sql" />
 		</jdbc:initialize-database>
 	</beans>
 

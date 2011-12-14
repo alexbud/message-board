@@ -38,11 +38,6 @@
 			<td><form:errors path="content" cssClass="error"/></td>
 		</tr>
 		<tr>
-			<td>Sender:</td>
-			<td><form:input path="sender" size="50"/></td>
-			<td><form:errors path="sender" cssClass="error"/></td>
-		</tr>
-		<tr>
 			<td>URL:</td>
 			<td><form:input path="url" size="50"/></td>
 			<td><form:errors path="url" cssClass="error"/></td>
@@ -50,13 +45,12 @@
 		<form:hidden path="principal" />
 		<tr>
 			<td colspan="3"><input type="submit" value="Save"/>
+			<a href="<%= request.getContextPath() %>/board/messages/messageSummary"><input type="button" value="Cancel"/></a>
 			</td>
 		</tr>
 	</table>
 </form:form>
-<a href="<%= request.getContextPath() %>/board/messages/messageSummary"><input type="button" value="Cancel"></a>
-
-<p><a href="<c:url value="/board/messages/j_spring_security_logout"/>">Logout</a> (<security:authentication property="principal.username"/>)</p>
+<a href="<c:url value="/board/messages/j_spring_security_logout"/>"><input type="button" value="Logout (<security:authentication property="principal.username"/>)"/></a>
 </div>
 </body>
 

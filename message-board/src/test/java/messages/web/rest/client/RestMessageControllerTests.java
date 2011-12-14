@@ -49,6 +49,9 @@ public class RestMessageControllerTests {
 	@Autowired
 	private RestTemplate restTemplate;
 
+	/**
+	 * Test setup.
+	 */
 	@Before
 	public void setUp() throws Exception {
 		// authenticated user
@@ -75,7 +78,7 @@ public class RestMessageControllerTests {
 		assertNotNull(list.get(id).getId());
 		assertNotNull(list.get(id).getTitle());
 		assertNotNull(list.get(id).getContent());
-		assertNotNull(list.get(id).getSender());
+		assertNotNull(list.get(id).getPrincipal());
 		assertNotNull(list.get(id).getUrl());
 		// test application/json Accept header
 		HttpHeaders headers = new HttpHeaders();
@@ -104,7 +107,7 @@ public class RestMessageControllerTests {
 		final int id = 0;
 		assertNotNull(list.get(id).getTitle());
 		assertNotNull(list.get(id).getContent());
-		assertNotNull(list.get(id).getSender());
+		assertNotNull(list.get(id).getPrincipal());
 		// test application/json Accept header
 		HttpHeaders headers = new HttpHeaders();
 		headers.set("Accept", "application/json");
@@ -132,7 +135,7 @@ public class RestMessageControllerTests {
 		assertNotNull(message.getId());
 		assertNotNull(message.getTitle());
 		assertNotNull(message.getContent());
-		assertNotNull(message.getSender());
+		assertNotNull(message.getPrincipal());
 		assertNotNull(message.getUrl());
 		// test application/json Accept header
 		HttpHeaders headers = new HttpHeaders();
@@ -160,7 +163,7 @@ public class RestMessageControllerTests {
 				MessageResponseShort.class, id);
 		assertNotNull(message.getTitle());
 		assertNotNull(message.getContent());
-		assertNotNull(message.getSender());
+		assertNotNull(message.getPrincipal());
 		// test application/json Accept header
 		HttpHeaders headers = new HttpHeaders();
 		headers.set("Accept", "application/json");
@@ -184,7 +187,6 @@ public class RestMessageControllerTests {
 		String url = BASE_URL + "/full/messages";
 		Message message = new Message("title");
 		message.setContent("content");
-		message.setSender("sender");
 		message.setUrl("http://url");
 		URI newMessageLocation = this.restTemplate
 				.postForLocation(url, message);
@@ -193,7 +195,7 @@ public class RestMessageControllerTests {
 		assertNotNull(retrievedMessage.getId());
 		assertEquals(message.getTitle(), retrievedMessage.getTitle());
 		assertEquals(message.getContent(), retrievedMessage.getContent());
-		assertEquals(message.getSender(), retrievedMessage.getSender());
+		assertEquals("admin", retrievedMessage.getPrincipal());
 		assertEquals(message.getUrl(), retrievedMessage.getUrl());
 	}
 
@@ -215,7 +217,6 @@ public class RestMessageControllerTests {
 		String url = BASE_URL + "/full/messages";
 		Message message = new Message("title");
 		message.setContent("content");
-		message.setSender("sender");
 		message.setUrl("http://url");
 		try {
 			this.restTemplate.postForLocation(url, message);
@@ -257,7 +258,6 @@ public class RestMessageControllerTests {
 		// first create message
 		Message message = new Message("title");
 		message.setContent("content");
-		message.setSender("sender");
 		message.setUrl("http://url");
 		URI newMessageLocation = this.restTemplate
 				.postForLocation(url, message);
@@ -287,7 +287,6 @@ public class RestMessageControllerTests {
 		// first create message by admin
 		Message message = new Message("title");
 		message.setContent("content");
-		message.setSender("sender");
 		message.setUrl("http://url");
 		URI newMessageLocation = this.restTemplate
 				.postForLocation(url, message);
@@ -323,7 +322,6 @@ public class RestMessageControllerTests {
 		final String title = "title";
 		Message message = new Message(title);
 		message.setContent("content");
-		message.setSender("sender");
 		message.setUrl("http://url");
 		URI newMessageLocation = this.restTemplate
 				.postForLocation(url, message);
@@ -338,7 +336,6 @@ public class RestMessageControllerTests {
 		newMessage.setTitle(newTitle);
 		// other values are not changes, only title
 		newMessage.setContent(retrievedMessage.getContent());
-		newMessage.setSender(retrievedMessage.getSender());
 		newMessage.setUrl(retrievedMessage.getUrl());
 		this.restTemplate.put(newMessageLocation, newMessage);
 		MessageResponseFull newRetrievedMessage = this.restTemplate

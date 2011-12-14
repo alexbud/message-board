@@ -63,7 +63,7 @@ public class SoapMessageBoardTests {
 		// the message content must exist
 		assertNotNull(message.getContent());
 		// the message sender must exist
-		assertNotNull(message.getSender());
+		assertNotNull(message.getPrincipal());
 		// the message url must exist
 		assertNotNull(message.getUrl());
 	}
@@ -87,7 +87,7 @@ public class SoapMessageBoardTests {
 		// the message content must exists
 		assertNotNull(message.getContent());
 		// the message sender must exists
-		assertNotNull(message.getSender());
+		assertNotNull(message.getPrincipal());
 	}
 
 	/**
@@ -107,8 +107,6 @@ public class SoapMessageBoardTests {
 		request.setTitle(title);
 		final String content = "new content";
 		request.setContent(content);
-		final String sender = "new sender";
-		request.setSender(sender);
 		final String url = "http://www";
 		request.setUrl(url);
 

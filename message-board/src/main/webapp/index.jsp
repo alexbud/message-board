@@ -19,10 +19,14 @@
 
 <security:authorize access="isAuthenticated()">
 	<p><a href="board/messages/messageSummary">View Message Summary</a></p>
-	<p><a href="<c:url value="/board/messages/j_spring_security_logout"/>">Logout</a> (<security:authentication property="principal.username"/>)</p>
+	<security:authorize access="hasRole('ROLE_ADMIN')">
+		<p><a href="board/users/userSummary">View User Summary</a></p>
+	</security:authorize>
+	<p><a href="<c:url value="/board/messages/j_spring_security_logout"/>"><input type="button" value="Logout (<security:authentication property="principal.username"/>)"/></a></p>
 </security:authorize>
 <security:authorize access="isAnonymous()">
 	<p><a href="board/login.htm">Login</a></p>
+	<p><a href="board/users/createUser">Register</a></p>
 </security:authorize>
 
 </div>

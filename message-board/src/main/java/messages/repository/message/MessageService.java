@@ -1,8 +1,12 @@
-package messages.repository;
+package messages.repository.message;
 
 import java.util.List;
 
+import javax.annotation.security.RolesAllowed;
+
 import messages.orm.Message;
+
+import org.springframework.security.access.prepost.PreAuthorize;
 
 /**
  * Manages access to message information.
@@ -14,6 +18,7 @@ public interface MessageService {
 	 * 
 	 * @return all messages
 	 */
+	@PreAuthorize("isAuthenticated()")
 	public List<Message> getAllMessages();
 
 	/**
@@ -23,6 +28,7 @@ public interface MessageService {
 	 *            the message id
 	 * @return the message
 	 */
+	@PreAuthorize("isAuthenticated()")
 	public Message getMessage(Integer id);
 
 	/**
@@ -31,14 +37,16 @@ public interface MessageService {
 	 * @param message
 	 *            The new message to persist
 	 */
+	@RolesAllowed("ROLE_MEMBER")
 	public void create(Message message);
 
 	/**
 	 * Removes a message.
 	 * 
 	 * @param message
-	 *            The new message to persist
+	 *            The message to remove
 	 */
+	@PreAuthorize("(hasRole('ROLE_ADMIN')) or (#message.principal == principal.username)")
 	public void remove(Message message);
 
 	/**
@@ -47,5 +55,6 @@ public interface MessageService {
 	 * @param message
 	 *            The message with changes
 	 */
+	@PreAuthorize("(hasRole('ROLE_ADMIN')) or (#message.principal == principal.username)")
 	public void update(Message message);
 }

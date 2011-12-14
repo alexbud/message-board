@@ -5,7 +5,7 @@ import java.util.List;
 import javax.validation.Valid;
 
 import messages.orm.Message;
-import messages.repository.MessageService;
+import messages.repository.message.MessageService;
 import messages.util.MessageRequestConverterUtils;
 import messages.ws.types.CreateMessageRequest;
 import messages.ws.types.ListMessagesFullRequest;
@@ -44,8 +44,6 @@ public class MessageBoardEndpoint {
 		Message message = new Message(title);
 		String content = messageRequest.getContent();
 		message.setContent(content);
-		String sender = messageRequest.getSender();
-		message.setSender(sender);
 		String url = messageRequest.getUrl();
 		message.setUrl(url);
 		this.messageService.create(message);
