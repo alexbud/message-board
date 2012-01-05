@@ -47,5 +47,4 @@ public class UserAccountTest {
 		assertFalse(account.getPassword().equals(password));
 		assertEquals(account.getPassword(), account.getPasswordConfirm());
 	}
-
 }
