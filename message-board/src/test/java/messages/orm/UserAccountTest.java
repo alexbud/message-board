@@ -11,7 +11,7 @@ import java.security.NoSuchAlgorithmException;
 import org.junit.Test;
 
 /**
- * Tests for {@link UserAccount}.
+ * Unit tests for {@link UserAccount}.
  */
 public class UserAccountTest {
 
@@ -47,5 +47,4 @@ public class UserAccountTest {
 		assertFalse(account.getPassword().equals(password));
 		assertEquals(account.getPassword(), account.getPasswordConfirm());
 	}
-
 }
