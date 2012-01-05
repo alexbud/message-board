@@ -24,7 +24,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 /**
  * An integration test for {@link MessageService}.
- * test test
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = { "classpath:app-config.xml" })
