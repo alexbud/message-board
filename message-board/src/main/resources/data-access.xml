@@ -27,6 +27,13 @@
 					<value>messages.orm</value>
 				</list>
 			</property>
+			<property name="hibernateProperties">
+				<props>
+					<prop key="hibernate.cache.use_second_level_cache">true</prop>
+            		<prop key="hibernate.cache.use_query_cache">true</prop>
+            		<prop key="hibernate.cache.provider_class">com.googlecode.hibernate.memcached.MemcachedCacheProvider</prop>
+				</props>
+			</property>
 		</bean>
 
 		<!-- Drives transactions using Hibernate APIs when requested -->
