@@ -33,6 +33,7 @@
 		<cloud.version>0.8.1</cloud.version>
 		<mysql.version>5.1.15</mysql.version>
 		<jedis.version>2.0.0</jedis.version>
+		<ehcache.version>2.4.7</ehcache.version>
 	</properties>
 	<build>
 		<resources>
@@ -155,10 +156,9 @@
 			<url>http://repository.jboss.org/maven2</url>
 		</repository>
 		<repository>
-    		<id>hibernate-memcached</id>
-    		<name>hibernate-memcached</name>
-    		<url>http://raykrueger.googlecode.com/svn/repository</url>
-		</repository>
+    		<id>sourceforge</id>
+   			 <url>http://oss.sonatype.org/content/repositories/sourceforge-releases</url>
+  		</repository>
 	</repositories>
 	<dependencies>
 		<!-- Spring dependencies -->
@@ -485,16 +485,12 @@
 			<artifactId>jedis</artifactId>
 			<version>${jedis.version}</version>
 		</dependency>
-		<!-- MemCached -->
+		<!-- EhCache -->
 		<dependency>
-   			<groupId>com.googlecode</groupId>
-    		<artifactId>hibernate-memcached</artifactId>
-   		 	<version>1.2.1</version>
-		</dependency>
-		<dependency>
- 		    <groupId>spy</groupId>
-  			<artifactId>memcached</artifactId>
-  			<version>2.3.1</version>
+			<groupId>net.sf.ehcache</groupId>
+			<artifactId>ehcache</artifactId>
+			<version>${ehcache.version}</version>
+			<type>pom</type>
 		</dependency>
 	</dependencies>
 </project>

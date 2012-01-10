@@ -7,6 +7,9 @@ import messages.orm.Message;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -36,6 +39,7 @@ public class HibernateMessageService implements MessageService {
 	 */
 	@Transactional(readOnly = true)
 	@SuppressWarnings("unchecked")
+	//@Cacheable("messagesCache")
 	public List<Message> getAllMessages() {
 		return this.getCurrentSession().createQuery("from Message").list();
 	}
@@ -44,6 +48,7 @@ public class HibernateMessageService implements MessageService {
 	 * @see messages.repository.message.MessageService#getMessage(java.lang.Integer)
 	 */
 	@Transactional(readOnly = true)
+	@Cacheable(value = "messageCache", key = "#id")
 	public Message getMessage(Integer id) {
 		return (Message) this.getCurrentSession().load(Message.class, id);
 	}
@@ -52,6 +57,7 @@ public class HibernateMessageService implements MessageService {
 	 * @see messages.repository.message.MessageService#create(messages.orm.Message)
 	 */
 	@Transactional
+	//@CachePut(value = "messageCache", key = "#message.id")
 	public void create(Message message) {
 		String principal = SecurityContextHolder.getContext()
 				.getAuthentication().getName();
@@ -65,6 +71,7 @@ public class HibernateMessageService implements MessageService {
 	 * @see messages.repository.message.MessageService#remove(messages.orm.Message)
 	 */
 	@Transactional
+	@CacheEvict(value = "messageCache", allEntries = true)
 	public void remove(Message message) {
 		this.getCurrentSession().delete(message);
 		this.getCurrentSession().flush();
