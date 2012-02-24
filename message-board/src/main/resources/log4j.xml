@@ -10,6 +10,14 @@
 			<param name="ConversionPattern" value="%-5p: %c - %m%n" />
 		</layout>
 	</appender>
+	
+	<appender name="file" class="org.apache.log4j.FileAppender">
+        <param name="File" value="/tmp/message-board.log" />
+        <param name="Append" value="true" />
+        <layout class="org.apache.log4j.PatternLayout">
+          <param name="ConversionPattern" value="%t %-5p %c{2} - %m%n"/>
+        </layout>           
+     </appender>
 
 	<!-- Application logger -->
 	<logger name="messages">
