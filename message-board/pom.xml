@@ -148,7 +148,7 @@
                     <debug>true</debug>
                     <echo>false</echo>
                     <terse>true</terse>
-                    <!-- <skip>${test.int.skip}</skip> -->
+                    <skip>true</skip>
                     <domain>
                         <name>domain1</name>
                         <adminPort>4848</adminPort>
@@ -158,8 +158,8 @@
                     </domain>
                     <components>
                         <component>
-                            <name>${project.artifactId}</name>
-                            <artifact>${project.build.directory}/licensing.war</artifact>
+                            <name>${project.artifactId}-${project.version}</name>
+                            <artifact>${project.build.directory}/${project.artifactId}-${project.version}.war</artifact>
                         </component>
                     </components>
                 </configuration>
