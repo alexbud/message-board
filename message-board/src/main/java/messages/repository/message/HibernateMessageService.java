@@ -24,8 +24,7 @@ public class HibernateMessageService implements MessageService {
 	/**
 	 * Creates a new Hibernate message service.
 	 * 
-	 * @param sessionFactory
-	 *            the Hibernate session factory
+	 * @param sessionFactory the Hibernate session factory
 	 */
 	public HibernateMessageService(SessionFactory sessionFactory) {
 		this.sessionFactory = sessionFactory;
