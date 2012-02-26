@@ -42,27 +42,19 @@
 	</logger>
 
 	<logger name="org.springframework.web">
-		<level value="debug" />
+		<level value="info" />
 	</logger>
 	
 	<logger name="org.springframework.test">
-		<level value="debug" />
-	</logger>
-
-	<logger name="org.springframework.webflow">
-		<level value="debug" />
+		<level value="info" />
 	</logger>
 	
 	<logger name="org.springframework.security">
-		<level value="debug" />
-	</logger>
-	
-	<logger name="org.springframework.cache">
-		<level value="debug" />
+		<level value="info" />
 	</logger>
 	
 	<logger name="org.hibernate.validation">
-		<level value="debug" />
+		<level value="info" />
 	</logger>
 
 	<!-- Root Logger -->

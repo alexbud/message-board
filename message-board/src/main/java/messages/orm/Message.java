@@ -74,8 +74,7 @@ public class Message {
 	 * data access code (repositories that work with an Object Relational Mapper
 	 * (ORM)). Should never be set by application code explicitly.
 	 * 
-	 * @param entityId
-	 *            the internal entity identifier
+	 * @param entityId the internal entity identifier
 	 */
 	public void setEntityId(Integer entityId) {
 		this.entityId = entityId;
