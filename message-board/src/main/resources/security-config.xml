@@ -63,7 +63,7 @@
 		</security:authentication-manager>
 	</beans>
     
-    <beans profile="production, cloud">
+    <beans profile="production, cloud, cloudBees">
     	<security:authentication-manager>
 			<security:authentication-provider>
 				<security:password-encoder hash="sha-256" base64="true"/>
