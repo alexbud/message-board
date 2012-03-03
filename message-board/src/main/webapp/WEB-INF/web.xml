@@ -10,7 +10,7 @@
 	<context-param>
 		<param-name>spring.profiles.active</param-name>
 		<!-- Don't forget to change inViewFilter below -->
-		<param-value>cloud, hibernate</param-value>
+		<param-value>cloudbees, hibernate</param-value>
 	</context-param>
 
 	<!-- Beans in these files will makeup the configuration of the root web application context -->
