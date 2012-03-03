@@ -9,7 +9,7 @@
 
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-	<title>Welcome to message board</title>
+	<title>Welcome to message board iuygfediaygdiygziydsa</title>
 </head>
 
 <body>
