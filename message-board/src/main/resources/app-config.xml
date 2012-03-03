@@ -16,10 +16,6 @@
 	<import resource="/data-access.xml" />
 	<import resource="/data-source.xml" />
 
-	<!-- Translates Hibernate exceptions to Spring Data Access Exceptions -->
-	<bean
-		class="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor" />
-
 	<!-- Mail sender -->
 	<bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
 		<property name="host" value="smtp.mail.ru" />

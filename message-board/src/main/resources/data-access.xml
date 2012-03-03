@@ -36,7 +36,7 @@
 		</bean>
 	</beans>
 
-	<beans profile="jpa, cloud">
+	<beans profile="jpa">
 		<!-- The message service that can load messages from the database -->
 		<bean id="messageService" class="messages.repository.message.JpaMessageService" />
 		<!-- The user account service that can load user accounts from the database -->

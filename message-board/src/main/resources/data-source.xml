@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:jdbc="http://www.springframework.org/schema/jdbc"
 	xmlns:cloud="http://schema.cloudfoundry.org/spring"
-	xsi:schemaLocation="http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc-3.1.xsd
+	xmlns:jee="http://www.springframework.org/schema/jee"
+	xsi:schemaLocation="http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-3.1.xsd
+		http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc-3.1.xsd
 		http://schema.cloudfoundry.org/spring http://schema.cloudfoundry.org/spring/cloudfoundry-spring-0.8.xsd
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.1.xsd">
 
@@ -30,8 +33,16 @@
 	</beans>
 	
 	<beans profile="cloud">
-		<cloud:data-source id="dataSource" service-name="messagesMySQLservice"/>
-		<jdbc:initialize-database data-source="dataSource">
+		<cloud:data-source id="dataSource"/>
+		<jdbc:initialize-database data-source="dataSource" ignore-failures="ALL">
+			<jdbc:script location="classpath:/productiondb/schema.sql" />
+			<jdbc:script location="classpath:/productiondb/init-data.sql" />
+		</jdbc:initialize-database>
+	</beans>
+
+	<beans profile="cloudBees">
+		<jee:jndi-lookup id="dataSource" jndi-name="java:comp/env/jdbc/messages"/>
+		<jdbc:initialize-database data-source="dataSource" ignore-failures="ALL">
 			<jdbc:script location="classpath:/productiondb/schema.sql" />
 			<jdbc:script location="classpath:/productiondb/init-data.sql" />
 		</jdbc:initialize-database>

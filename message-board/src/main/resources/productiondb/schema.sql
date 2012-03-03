@@ -8,6 +8,7 @@ create table if not exists T_AUTHORITIES (
 	USERNAME varchar(50), 
 	AUTHORITY varchar(50) not null);
 
+drop index IX_T_AUTHORITIES_U on T_AUTHORITIES;
 create unique index IX_T_AUTHORITIES_U on T_AUTHORITIES (USERNAME, AUTHORITY) using HASH;
 	
 create table if not exists T_MESSAGE (
