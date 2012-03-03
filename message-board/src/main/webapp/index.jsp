@@ -9,13 +9,13 @@
 
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-	<title>Welcome to message board iuygfediaygdiygziydsa</title>
+	<title>Welcome to message board</title>
 </head>
 
 <body>
 <div id="main_wrapper">
 
-<h1>Welcome to message board jhtdyhtdtyh</h1>
+<h1>Welcome to message board</h1>
 
 <security:authorize access="isAuthenticated()">
 	<p><a href="board/messages/messageSummary">View Message Summary</a></p>
