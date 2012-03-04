@@ -7,7 +7,7 @@
 		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.1.xsd
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.1.xsd">
 
-	<beans profile="hibernate">
+	<beans profile="hibernate, cloud">
 		<!-- The message service service that can load messages from the database -->
 		<bean id="messageService" class="messages.repository.message.HibernateMessageService">
 			<constructor-arg ref="sessionFactory" />

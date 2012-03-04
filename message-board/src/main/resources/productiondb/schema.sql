@@ -1,3 +1,6 @@
+drop database if exists messages;
+create database messages;
+
 create table if not exists T_USER (
 	TS timestamp not null,
 	USERNAME varchar(20) not null primary key, 
