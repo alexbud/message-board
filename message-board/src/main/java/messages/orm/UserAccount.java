@@ -13,7 +13,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.PrePersist;
-import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.validation.constraints.AssertTrue;
@@ -59,8 +58,7 @@ public class UserAccount {
 	 * @param password
 	 * @param authorities
 	 */
-	public UserAccount(String username, String password,
-			String passwordConfirm, UserRole authority) {
+	public UserAccount(String username, String password, String passwordConfirm, UserRole authority) {
 		this.username = username;
 		this.password = password;
 		this.passwordConfirm = passwordConfirm;
@@ -139,8 +137,7 @@ public class UserAccount {
 		if (this.authorities == null) {
 			this.authorities = new ArrayList<UserAuthority>();
 		}
-		UserAuthority userAuthority = new UserAuthority(this.getUsername(),
-				authority);
+		UserAuthority userAuthority = new UserAuthority(this.getUsername(), authority);
 		this.authorities.add(userAuthority);
 	}
 
@@ -161,8 +158,7 @@ public class UserAccount {
 	 * @throws NoSuchAlgorithmException
 	 */
 	@PrePersist
-	@PreUpdate
-	void preparePasswordSave() throws NoSuchAlgorithmException {
+	public void preparePasswordSave() throws NoSuchAlgorithmException {
 		MessageDigest algorithm = MessageDigest.getInstance("SHA-256");
 		algorithm.reset();
 		algorithm.update(this.getPassword().getBytes());
@@ -181,8 +177,7 @@ public class UserAccount {
 		sb.append("Timestamp: ").append(this.getTimestamp()).append(", ");
 		sb.append("UserName: ").append(this.getUsername()).append(", ");
 		sb.append("Password: ").append(this.getPassword()).append(", ");
-		sb.append("Password confirm: ").append(this.getPasswordConfirm())
-				.append(", ");
+		sb.append("Password confirm: ").append(this.getPasswordConfirm()).append(", ");
 		sb.append("Authorities: ").append(this.getAuthorities());
 		return sb.toString();
 	}

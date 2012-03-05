@@ -1,5 +1,6 @@
 package messages.repository.user;
 
+import java.security.NoSuchAlgorithmException;
 import java.sql.Timestamp;
 import java.util.List;
 
@@ -27,8 +28,7 @@ public class JpaUserAccountService implements UserAccountService {
 	@Transactional(readOnly = true)
 	@SuppressWarnings("unchecked")
 	public List<UserAccount> getAllUsers() {
-		return this.entityManager.createQuery("from UserAccount")
-				.getResultList();
+		return this.entityManager.createQuery("from UserAccount").getResultList();
 	}
 
 	/**
@@ -36,8 +36,7 @@ public class JpaUserAccountService implements UserAccountService {
 	 */
 	@Transactional(readOnly = true)
 	public UserAccount findByUsername(String username) {
-		return (UserAccount) this.entityManager.find(UserAccount.class,
-				username);
+		return (UserAccount) this.entityManager.find(UserAccount.class, username);
 	}
 
 	/**
@@ -59,11 +58,16 @@ public class JpaUserAccountService implements UserAccountService {
 	}
 
 	/**
+	 * @throws NoSuchAlgorithmException
 	 * @see messages.repository.user.UserAccountService#update(messages.orm.UserAccount)
 	 */
 	@Transactional
-	public void update(UserAccount user) {
+	public void update(UserAccount user) throws NoSuchAlgorithmException {
 		user.setTimestamp(new Timestamp(System.currentTimeMillis()));
+
+		// @PreUpdate doesn't work with Session API
+		user.preparePasswordSave();
+
 		this.entityManager.merge(user);
 	}
 }

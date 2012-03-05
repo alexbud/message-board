@@ -1,5 +1,6 @@
 package messages.repository.user;
 
+import java.security.NoSuchAlgorithmException;
 import java.sql.Timestamp;
 import java.util.List;
 
@@ -22,8 +23,7 @@ public class HibernateUserAccountService implements UserAccountService {
 	/**
 	 * Creates a new Hibernate user account service.
 	 * 
-	 * @param sessionFactory
-	 *            the Hibernate session factory
+	 * @param sessionFactory the Hibernate session factory
 	 */
 	public HibernateUserAccountService(SessionFactory sessionFactory) {
 		this.sessionFactory = sessionFactory;
@@ -43,16 +43,20 @@ public class HibernateUserAccountService implements UserAccountService {
 	 */
 	@Transactional(readOnly = true)
 	public UserAccount findByUsername(String username) {
-		return (UserAccount) this.getCurrentSession().load(UserAccount.class,
-				username);
+		return (UserAccount) this.getCurrentSession().load(UserAccount.class, username);
 	}
 
 	/**
+	 * @throws NoSuchAlgorithmException
 	 * @see messages.repository.user.UserAccountService#create(messages.orm.UserAccount)
 	 */
 	@Transactional
-	public void create(UserAccount user) {
+	public void create(UserAccount user) throws NoSuchAlgorithmException {
 		user.setTimestamp(new Timestamp(System.currentTimeMillis()));
+
+		// @PrePersist doesn't work with Session API
+		user.preparePasswordSave();
+
 		this.getCurrentSession().persist(user);
 	}
 
@@ -66,11 +70,16 @@ public class HibernateUserAccountService implements UserAccountService {
 	}
 
 	/**
+	 * @throws NoSuchAlgorithmException
 	 * @see messages.repository.user.UserAccountService#update(messages.orm.UserAccount)
 	 */
 	@Transactional
-	public void update(UserAccount user) {
+	public void update(UserAccount user) throws NoSuchAlgorithmException {
 		user.setTimestamp(new Timestamp(System.currentTimeMillis()));
+
+		// @PreUpdate doesn't work with Session API
+		user.preparePasswordSave();
+
 		this.getCurrentSession().update(user);
 	}
 

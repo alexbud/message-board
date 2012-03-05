@@ -3,9 +3,11 @@ package messages.repository.user;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNotSame;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
+import java.security.NoSuchAlgorithmException;
 import java.sql.Timestamp;
 import java.util.List;
 
@@ -69,27 +71,28 @@ public abstract class UserAccountServiceTest {
 
 	/**
 	 * Test for {@link UserAccountService#update(UserAccount)}.
+	 * 
+	 * @throws NoSuchAlgorithmException
 	 */
 	@Test
 	@Transactional
-	public void testUpdateAccount() {
+	public void testUpdateAccount() throws NoSuchAlgorithmException {
 		final String username = "admin";
-		UserAccount oldAccount = this.userAccountService
-				.findByUsername(username);
+		UserAccount oldAccount = this.userAccountService.findByUsername(username);
 		Timestamp oldtimestamp = oldAccount.getTimestamp();
 		assertNotNull(oldtimestamp);
 		final List<UserAuthority> authorities = oldAccount.getAuthorities();
 		assertNotNull(authorities);
 		final UserRole newAuthority = UserRole.ROLE_VIEWER;
 		oldAccount.addAuthority(UserRole.ROLE_VIEWER);
-		oldAccount.setPasswordConfirm(oldAccount.getPassword());
+		final String passwordOld = oldAccount.getPassword();
+		oldAccount.setPasswordConfirm(passwordOld);
 		this.userAccountService.update(oldAccount);
-		UserAccount newAccount = this.userAccountService
-				.findByUsername(username);
+		UserAccount newAccount = this.userAccountService.findByUsername(username);
+		assertNotSame("new password wasn't hashed", passwordOld, newAccount.getPassword());
 		Object[] newAuthorities = newAccount.getAuthorities().toArray();
 		assertEquals("Did not persist the authorities change", newAuthority,
-				((UserAuthority) newAuthorities[newAuthorities.length - 1])
-						.getAuthority());
+				((UserAuthority) newAuthorities[newAuthorities.length - 1]).getAuthority());
 		Timestamp newtimestamp = newAccount.getTimestamp();
 		assertNotNull(newtimestamp);
 		assertFalse(newtimestamp.equals(oldtimestamp));
@@ -98,10 +101,12 @@ public abstract class UserAccountServiceTest {
 	/**
 	 * Test for {@link UserAccountService#update(UserAccount)}. Authorization
 	 * test for update and delete a account.
+	 * 
+	 * @throws NoSuchAlgorithmException
 	 */
 	@Test
 	@Transactional
-	public void testUpdateDeleteAccountNotAuthorized() {
+	public void testUpdateDeleteAccountNotAuthorized() throws NoSuchAlgorithmException {
 		// ROLE_ADMIN user
 		SecurityContextHolder.getContext().setAuthentication(
 				new UsernamePasswordAuthenticationToken("admin", "password"));
@@ -116,8 +121,7 @@ public abstract class UserAccountServiceTest {
 		// ROLE_MEMBER user can't update another account
 		SecurityContextHolder.getContext().setAuthentication(
 				new UsernamePasswordAuthenticationToken("member", "password"));
-		UserAccount retrievedAccount = this.userAccountService
-				.findByUsername("admin");
+		UserAccount retrievedAccount = this.userAccountService.findByUsername("admin");
 		retrievedAccount.setPassword("New password");
 		retrievedAccount.setPasswordConfirm("New password");
 		try {
@@ -142,19 +146,23 @@ public abstract class UserAccountServiceTest {
 
 	/**
 	 * Test for {@link UserAccountService#create(UserAccount)}.
+	 * 
+	 * @throws NoSuchAlgorithmException
 	 */
 	@Test
 	@Transactional
-	public void testCreateAccount() {
+	public void testCreateAccount() throws NoSuchAlgorithmException {
 		UserAccount account = new UserAccount();
 		account.setUsername("name");
-		account.setPassword("password");
+		final String password = "password";
+		account.setPassword(password);
 		account.setPasswordConfirm("password");
 		account.addAuthority(UserRole.ROLE_MEMBER);
 		this.userAccountService.create(account);
 		assertEquals(5, this.userAccountService.getAllUsers().size());
-		assertNotNull(this.userAccountService.findByUsername(
-				account.getUsername()).getPassword());
+		String passwordHashed = this.userAccountService.findByUsername(account.getUsername()).getPassword();
+		assertNotNull(passwordHashed);
+		assertNotSame("new password wasn't hashed", password, passwordHashed);
 		assertNotNull(account.getTimestamp());
 		// test mandatory field validation
 		account = new UserAccount();

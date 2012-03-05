@@ -1,5 +1,6 @@
 package messages.repository.user;
 
+import java.security.NoSuchAlgorithmException;
 import java.util.List;
 
 import javax.annotation.security.RolesAllowed;
@@ -33,16 +34,15 @@ public interface UserAccountService {
 	/**
 	 * Persists a new user.
 	 * 
-	 * @param user
-	 *            The new user to persist.
+	 * @param user the new user to persist.
+	 * @throws NoSuchAlgorithmException
 	 */
-	public void create(UserAccount user);
+	public void create(UserAccount user) throws NoSuchAlgorithmException;
 
 	/**
 	 * Removes a user.
 	 * 
-	 * @param user
-	 *            The user to remove.
+	 * @param user the user to remove.
 	 */
 	@RolesAllowed("ROLE_ADMIN")
 	public void remove(UserAccount user);
@@ -50,9 +50,9 @@ public interface UserAccountService {
 	/**
 	 * Takes a changed user and persists any changes made to it.
 	 * 
-	 * @param user
-	 *            The user with changes
+	 * @param user The user with changes
+	 * @throws NoSuchAlgorithmException
 	 */
 	@PreAuthorize("(hasRole('ROLE_ADMIN')) or (#user.username == principal.username)")
-	public void update(UserAccount user);
+	public void update(UserAccount user) throws NoSuchAlgorithmException;
 }

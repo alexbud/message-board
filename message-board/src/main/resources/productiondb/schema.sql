@@ -1,5 +1,3 @@
-use messages;
-
 drop table if exists T_AUTHORITIES;
 drop table if exists T_USER;
 drop table if exists T_MESSAGE;
