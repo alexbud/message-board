@@ -53,23 +53,20 @@
 	
 	<security:global-method-security jsr250-annotations="enabled" pre-post-annotations="enabled"/>
 	
-	<beans profile="dev">
-    	<security:authentication-manager>
-			<security:authentication-provider>
-				<security:jdbc-user-service data-source-ref="dataSource" 
+	<security:jdbc-user-service id="jdbcUserService" data-source-ref="dataSource" 
 					users-by-username-query="SELECT username, password, 1 AS enabled FROM t_user WHERE username = ?"
                 	authorities-by-username-query="SELECT username, authority FROM t_authorities WHERE username = ?"/>
-			</security:authentication-provider>
+	
+	<beans profile="dev">
+    	<security:authentication-manager>
+			<security:authentication-provider user-service-ref="jdbcUserService"/>
 		</security:authentication-manager>
 	</beans>
     
     <beans profile="production, cloud, cloudbees">
     	<security:authentication-manager>
-			<security:authentication-provider>
+			<security:authentication-provider user-service-ref="jdbcUserService">
 				<security:password-encoder hash="sha-256" base64="true"/>
-				<security:jdbc-user-service data-source-ref="dataSource" 
-					users-by-username-query="SELECT username, password, 1 AS enabled FROM t_user WHERE username = ?"
-                	authorities-by-username-query="SELECT username, authority FROM t_authorities WHERE username = ?"/>
 			</security:authentication-provider>
 		</security:authentication-manager>
 	</beans>
