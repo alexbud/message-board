@@ -15,7 +15,7 @@
 <body>
 <div id="main_wrapper">
 
-<h1>Welcome to message board</h1>
+<h1>Welcome to message board Github</h1>
 
 <security:authorize access="isAuthenticated()">
 	<p><a href="board/messages/messageSummary">View Message Summary</a></p>
