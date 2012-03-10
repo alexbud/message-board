@@ -6,6 +6,8 @@ import java.util.List;
 
 import messages.orm.UserAccount;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.stereotype.Repository;
@@ -18,6 +20,8 @@ import org.springframework.transaction.annotation.Transactional;
 @Repository
 public class HibernateUserAccountService implements UserAccountService {
 
+	private Log log = LogFactory.getLog(this.getClass());
+	
 	private SessionFactory sessionFactory;
 
 	/**
@@ -52,6 +56,7 @@ public class HibernateUserAccountService implements UserAccountService {
 	 */
 	@Transactional
 	public void create(UserAccount user) throws NoSuchAlgorithmException {
+		log.info("Create a user: " + user); 
 		user.setTimestamp(new Timestamp(System.currentTimeMillis()));
 
 		// @PrePersist doesn't work with Session API
@@ -65,6 +70,7 @@ public class HibernateUserAccountService implements UserAccountService {
 	 */
 	@Transactional
 	public void remove(UserAccount user) {
+		log.info("Remove a user: " + user); 
 		this.getCurrentSession().delete(user);
 		this.getCurrentSession().flush();
 	}
@@ -75,6 +81,7 @@ public class HibernateUserAccountService implements UserAccountService {
 	 */
 	@Transactional
 	public void update(UserAccount user) throws NoSuchAlgorithmException {
+		log.info("Update a user: " + user); 
 		user.setTimestamp(new Timestamp(System.currentTimeMillis()));
 
 		// @PreUpdate doesn't work with Session API

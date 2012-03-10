@@ -5,6 +5,8 @@ import java.util.List;
 
 import messages.orm.Message;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -18,6 +20,8 @@ import org.springframework.util.Assert;
  */
 @Repository
 public class HibernateMessageService implements MessageService {
+	
+	private Log log = LogFactory.getLog(this.getClass());
 
 	private SessionFactory sessionFactory;
 
@@ -52,6 +56,7 @@ public class HibernateMessageService implements MessageService {
 	 */
 	@Transactional
 	public void create(Message message) {
+		log.info("Create a message: " + message);
 		String principal = SecurityContextHolder.getContext()
 				.getAuthentication().getName();
 		Assert.notNull(principal);
@@ -65,6 +70,7 @@ public class HibernateMessageService implements MessageService {
 	 */
 	@Transactional
 	public void remove(Message message) {
+		log.info("Remove a message: " + message);
 		this.getCurrentSession().delete(message);
 		this.getCurrentSession().flush();
 	}
@@ -74,6 +80,7 @@ public class HibernateMessageService implements MessageService {
 	 */
 	@Transactional
 	public void update(Message message) {
+		log.info("Update a message: " + message);
 		String principal = SecurityContextHolder.getContext()
 				.getAuthentication().getName();
 		Assert.notNull(principal);
