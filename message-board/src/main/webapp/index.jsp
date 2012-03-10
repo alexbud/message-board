@@ -17,6 +17,8 @@
 
 <h1>Welcome to message board Github</h1>
 
+<jsp:include page="version.jsp" />
+
 <security:authorize access="isAuthenticated()">
 	<p><a href="board/messages/messageSummary">View Message Summary</a></p>
 	<security:authorize access="hasRole('ROLE_ADMIN')">

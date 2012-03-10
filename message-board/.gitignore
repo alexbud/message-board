@@ -8,5 +8,7 @@ uml
 *.project
 .settings/*
 .pmd
+work
+Users/*
 *.springBeans
 .project

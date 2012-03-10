@@ -97,6 +97,22 @@
 		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-war-plugin</artifactId>
+				<version>2.2</version>
+				<configuration>
+					<webResources>
+						<resource>
+							<filtering>true</filtering>
+							<directory>src/main/webapp</directory>
+							<includes>
+								<include>version.jsp</include>
+							</includes>
+						</resource>
+					</webResources>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
 				<configuration>
 					<source>1.6</source>
@@ -136,34 +152,34 @@
 				</configuration>
 			</plugin>
 			<plugin>
-                <groupId>org.glassfish.maven.plugin</groupId>
-                <artifactId>maven-glassfish-plugin</artifactId>
-                <version>2.1</version>
-                <configuration>
-                    <glassfishDirectory>c:\glassfish3\glassfish</glassfishDirectory>
-                    <user>admin</user>
-                    <adminUser>admin</adminUser>
-                    <passwordFile>c:\glassfish3\glassfish\domains\domain1\config\local-password</passwordFile>
-                    <autoCreate>true</autoCreate>
-                    <debug>true</debug>
-                    <echo>false</echo>
-                    <terse>true</terse>
-                    <skip>true</skip>
-                    <domain>
-                        <name>domain1</name>
-                        <adminPort>4848</adminPort>
-                        <httpPort>8088</httpPort>
-                        <httpsPort>8181</httpsPort>
-                        <reuse>false</reuse>
-                    </domain>
-                    <components>
-                        <component>
-                            <name>${project.artifactId}-${project.version}</name>
-                            <artifact>${project.build.directory}/${project.artifactId}-${project.version}.war</artifact>
-                        </component>
-                    </components>
-                </configuration>
-            </plugin>
+				<groupId>org.glassfish.maven.plugin</groupId>
+				<artifactId>maven-glassfish-plugin</artifactId>
+				<version>2.1</version>
+				<configuration>
+					<glassfishDirectory>c:\glassfish3\glassfish</glassfishDirectory>
+					<user>admin</user>
+					<adminUser>admin</adminUser>
+					<passwordFile>c:\glassfish3\glassfish\domains\domain1\config\local-password</passwordFile>
+					<autoCreate>true</autoCreate>
+					<debug>true</debug>
+					<echo>false</echo>
+					<terse>true</terse>
+					<skip>true</skip>
+					<domain>
+						<name>domain1</name>
+						<adminPort>4848</adminPort>
+						<httpPort>8088</httpPort>
+						<httpsPort>8181</httpsPort>
+						<reuse>false</reuse>
+					</domain>
+					<components>
+						<component>
+							<name>${project.artifactId}-${project.version}</name>
+							<artifact>${project.build.directory}/${project.artifactId}-${project.version}.war</artifact>
+						</component>
+					</components>
+				</configuration>
+			</plugin>
 		</plugins>
 	</build>
 	<repositories>
@@ -183,14 +199,14 @@
 			<url>http://repository.jboss.org/maven2</url>
 		</repository>
 		<repository>
-    		<id>sourceforge</id>
-   			<url>http://oss.sonatype.org/content/repositories/sourceforge-releases</url>
-  		</repository>
-  		<repository>
-    		<id>maven.java.net</id>
-            <name>Java.net Maven2 Repository</name>
-            <url>http://download.java.net/maven/2</url>
-        </repository>
+			<id>sourceforge</id>
+			<url>http://oss.sonatype.org/content/repositories/sourceforge-releases</url>
+		</repository>
+		<repository>
+			<id>maven.java.net</id>
+			<name>Java.net Maven2 Repository</name>
+			<url>http://download.java.net/maven/2</url>
+		</repository>
 	</repositories>
 	<dependencies>
 		<!-- Spring dependencies -->
