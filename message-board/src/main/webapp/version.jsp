@@ -5,6 +5,6 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 
-<body>Project version is <i>${project.version}</i></body> 
+<body>Project version is <i>${project.version}</i>-<i>${build.timestamp}</i></body> 
 
 </html>

@@ -8,6 +8,8 @@
 	<packaging>war</packaging>
 	<name>Sample Project</name>
 	<properties>
+    	<maven.build.timestamp.format>dd.MM.yyyy-HH:mm:ss</maven.build.timestamp.format>
+    	<build.timestamp>${maven.build.timestamp}</build.timestamp>
 		<!-- unified location for version numbers. -->
 		<spring.framework.version>3.1.0.RELEASE</spring.framework.version>
 		<spring.security.version>3.1.0.RELEASE</spring.security.version>
