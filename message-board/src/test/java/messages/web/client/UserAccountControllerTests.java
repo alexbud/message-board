@@ -20,7 +20,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.MailSender;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
@@ -28,13 +27,11 @@ import org.springframework.ui.ExtendedModelMap;
 import org.springframework.validation.BeanPropertyBindingResult;
 
 /**
- * An integration test case for {@link UserAccountController}. Test uses
- * in-memory database.
+ * An integration abstract test base for {@link UserAccountController}.
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = { "classpath:app-config.xml" })
-@ActiveProfiles(profiles = { "dev", "jpa" })
-public class UserAccountControllerTests {
+public abstract class UserAccountControllerTests {
 
 	@Autowired
 	private UserAccountService userAccountService;
