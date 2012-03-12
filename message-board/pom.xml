@@ -32,6 +32,7 @@
 		<apachecommonshttp.version>3.1</apachecommonshttp.version>
 		<apachecommonspool.version>1.5.4</apachecommonspool.version>
 		<apachecommons-dbcp.version>1.3</apachecommons-dbcp.version>
+		<beanutils.version>1.8.3</beanutils.version>
 		<commons-codec.version>1.4</commons-codec.version>
 		<cloud.version>0.8.1</cloud.version>
 		<mysql.version>5.1.15</mysql.version>
@@ -388,6 +389,11 @@
 			<groupId>commons-codec</groupId>
 			<artifactId>commons-codec</artifactId>
 			<version>${commons-codec.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>commons-beanutils</groupId>
+			<artifactId>commons-beanutils</artifactId>
+			<version>${beanutils.version}</version>
 		</dependency>
 		<!-- Apache HTTP -->
 		<dependency>

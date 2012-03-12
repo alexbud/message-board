@@ -15,8 +15,9 @@ import javax.persistence.OneToMany;
 import javax.persistence.PrePersist;
 import javax.persistence.Table;
 import javax.persistence.Transient;
-import javax.validation.constraints.AssertTrue;
 import javax.validation.constraints.Size;
+
+import messages.validation.FieldMatch;
 
 import org.apache.commons.codec.binary.Base64;
 import org.hibernate.validator.constraints.NotEmpty;
@@ -26,6 +27,9 @@ import org.hibernate.validator.constraints.NotEmpty;
  */
 @Entity
 @Table(name = "T_USER")
+@FieldMatch.List({
+    @FieldMatch(first = "password", second = "passwordConfirm", message = "The password fields must match")
+})
 public class UserAccount {
 
 	@Id
@@ -139,17 +143,6 @@ public class UserAccount {
 		}
 		UserAuthority userAuthority = new UserAuthority(this.getUsername(), authority);
 		this.authorities.add(userAuthority);
-	}
-
-	/**
-	 * @return <code>true</code> if password and password confirmation matches
-	 */
-	@AssertTrue(message = "Confirm password field should be equal than password field")
-	boolean isPasswordConfirm() {
-		if (this.password == null) {
-			return true;
-		}
-		return this.password.equals(this.passwordConfirm);
 	}
 
 	/**
