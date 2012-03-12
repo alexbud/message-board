@@ -1,7 +1,8 @@
-package messages.web;
+package messages.validation;
 
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
+
 
 /**
  * Custom URL validator.
