@@ -47,7 +47,7 @@ public class HibernateUserAccountService implements UserAccountService {
 	 */
 	@Transactional(readOnly = true)
 	public UserAccount findByUsername(String username) {
-		return (UserAccount) this.getCurrentSession().load(UserAccount.class, username);
+		return (UserAccount) this.getCurrentSession().get(UserAccount.class, username);
 	}
 
 	/**

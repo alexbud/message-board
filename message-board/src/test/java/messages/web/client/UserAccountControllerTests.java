@@ -157,16 +157,18 @@ public abstract class UserAccountControllerTests {
 	@Test
 	@Transactional
 	public void testHandleRemoveUserRequest() throws NoSuchAlgorithmException {
+		final int initialUserSize = this.userAccountService.getAllUsers().size();
+		assertEquals(4, initialUserSize);
 		// let's create a user first
-		UserAccount user = new UserAccount("user", "password", "password", UserRole.ROLE_MEMBER);
+		UserAccount user = new UserAccount("newuser", "newpassword", "newpassword", UserRole.ROLE_MEMBER);
 		this.controller.postCreateUser(user, new BeanPropertyBindingResult(user, "user"));
 		assertNotNull(user.getPassword());
 		final int size = this.userAccountService.getAllUsers().size();
-		assertEquals(5, size);
+		assertEquals(initialUserSize + 1, size);
 		// remove user
 		String viewName = this.controller.removeUser(user.getUsername());
 		assertEquals("redirect:/board/users/userSummary", viewName);
-		assertEquals(size - 1, this.userAccountService.getAllUsers().size());
+		assertEquals(initialUserSize, this.userAccountService.getAllUsers().size());
 		// still exists?
 		assertNull(this.userAccountService.findByUsername(user.getUsername()));
 		// remove another user
