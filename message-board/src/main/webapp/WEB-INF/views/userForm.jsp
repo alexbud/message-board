@@ -40,7 +40,7 @@
 		<tr>
 			<td>Confirm password:</td>
 			<td><form:password path="passwordConfirm" size="50"/></td>
-			<td><form:errors path="passwordConfirm" cssClass="error"/></td>
+			<td><form:errors cssClass="error"/></td>
 		</tr>
 		<tr>
 			<td colspan="3"><input type="submit" value="Save"/>
