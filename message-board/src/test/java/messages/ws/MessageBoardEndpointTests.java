@@ -19,7 +19,7 @@ import org.mockito.runners.MockitoJUnitRunner;
  * 
  */
 @RunWith(MockitoJUnitRunner.class)
-public class MessageBoardEndpointTest {
+public class MessageBoardEndpointTests {
 
 	@Mock
 	private MessageService messageService;
