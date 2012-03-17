@@ -38,7 +38,7 @@ import org.springframework.web.client.RestTemplate;
  */
 @ContextConfiguration(locations = { "/rest-client-config.xml" })
 @RunWith(SpringJUnit4ClassRunner.class)
-public class RestMessageControllerTests {
+public class ClientRestMessageControllerTests {
 
 	/**
 	 * Server URL ending with the servlet mapping on which the application can

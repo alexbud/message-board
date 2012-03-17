@@ -45,7 +45,7 @@ public class RestMessageController {
 	}
 
 	/**
-	 * Provide a REST list of all messages (FULL VERSION) for programmatic
+	 * Provides a REST list of all messages (FULL VERSION) for programmatic
 	 * access. Representation is selected depending on Accept header of the
 	 * request.
 	 */
@@ -63,7 +63,7 @@ public class RestMessageController {
 	}
 
 	/**
-	 * Provide a REST list of all messages (FULL VERSION) for browser access.
+	 * Provides a REST list of all messages (FULL VERSION) for browser access.
 	 * Representation is selected depending on media type extension (.json,
 	 * .xml).
 	 */
@@ -80,7 +80,7 @@ public class RestMessageController {
 	}
 
 	/**
-	 * Provide a REST list of all messages (SHORT VERSION) for programmatic
+	 * Provides a REST list of all messages (SHORT VERSION) for programmatic
 	 * access. Representation is selected depending on Accept header of the
 	 * request.
 	 */
@@ -98,7 +98,7 @@ public class RestMessageController {
 	}
 
 	/**
-	 * Provide a REST list of all messages (SHORT VERSION) for browser access.
+	 * Provides a REST list of all messages (SHORT VERSION) for browser access.
 	 * Representation is selected depending on media type extension (.json,
 	 * .xml).
 	 */
@@ -115,7 +115,7 @@ public class RestMessageController {
 	}
 
 	/**
-	 * Provide the details of a message (FULL VERSION) with the given id for
+	 * Provides the details of a message (FULL VERSION) with the given id for
 	 * programmatic access. Representation is selected depending on Accept
 	 * header of the request.
 	 */
@@ -132,7 +132,7 @@ public class RestMessageController {
 	}
 
 	/**
-	 * Provide the details of a message (FULL VERSION) with the given id for
+	 * Provides the details of a message (FULL VERSION) with the given id for
 	 * browser access. Representation is selected depending on media type
 	 * extension (.json, .xml).
 	 */
@@ -148,7 +148,7 @@ public class RestMessageController {
 	}
 
 	/**
-	 * Provide the details of a message (SHORT VERSION) with the given id for
+	 * Provides the details of a message (SHORT VERSION) with the given id for
 	 * programmatic access. Representation is selected depending on Accept
 	 * header of the request.
 	 */
@@ -165,7 +165,7 @@ public class RestMessageController {
 	}
 
 	/**
-	 * Provide the details of a message (SHORT VERSION) with the given id for
+	 * Provides the details of a message (SHORT VERSION) with the given id for
 	 * browser access. Representation is selected depending on media type
 	 * extension (.json, .xml).
 	 */

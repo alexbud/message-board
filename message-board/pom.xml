@@ -93,8 +93,7 @@
 							<include>**/*Tests.java</include>
 						</includes>
 						<excludes>
-							<exclude>**/Rest*.java</exclude>
-							<exclude>**/Soap*.java</exclude>
+							<exclude>**/Client*.java</exclude>
 						</excludes>
 					</configuration>
 				</plugin>

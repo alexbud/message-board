@@ -34,7 +34,7 @@ import org.w3c.dom.Element;
  */
 @ContextConfiguration(locations = { "classpath:/soap-client-config.xml" })
 @RunWith(SpringJUnit4ClassRunner.class)
-public class SoapMessageBoardTests {
+public class ClientSoapMessageBoardTests {
 
 	private static final String NAMESPACE_URI = "http://www.abudko.com/message-board";
 
