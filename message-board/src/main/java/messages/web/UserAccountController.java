@@ -9,8 +9,7 @@ import messages.orm.UserAccount;
 import messages.orm.UserRole;
 import messages.repository.user.UserAccountService;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.MailSender;
 import org.springframework.mail.SimpleMailMessage;
@@ -32,8 +31,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 @RequestMapping(value = "/users")
 public class UserAccountController {
 	
-	private Log log = LogFactory.getLog(this.getClass());
-
 	private UserAccountService userAccountService;
 
 	private MailSender mailSender;
@@ -131,10 +128,9 @@ public class UserAccountController {
 		try {
 			this.userAccountService.create(user);
 		}
-		catch (Exception e) {
+		catch (ConstraintViolationException e) {
 			String message = String.format("Username %s already exists", user.getUsername());
-			log.info(message, e);
-			result.addError(new ObjectError("username", message));
+			result.addError(new ObjectError("user", message));
 			return "userForm";
 		}
 		
