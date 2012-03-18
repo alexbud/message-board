@@ -9,12 +9,15 @@ import messages.orm.UserAccount;
 import messages.orm.UserRole;
 import messages.repository.user.UserAccountService;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.MailSender;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -28,6 +31,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 @Controller
 @RequestMapping(value = "/users")
 public class UserAccountController {
+	
+	private Log log = LogFactory.getLog(this.getClass());
 
 	private UserAccountService userAccountService;
 
@@ -115,11 +120,24 @@ public class UserAccountController {
 	@RequestMapping(value = "/createUser", method = RequestMethod.POST)
 	public String postCreateUser(@ModelAttribute("user") @Valid UserAccount user, BindingResult result)
 			throws NoSuchAlgorithmException {
+		// if validation fails then error
 		if (result.hasErrors()) {
 			return "userForm";
 		}
+		
+		// set member role for all new users
 		user.addAuthority(UserRole.ROLE_MEMBER);
-		this.userAccountService.create(user);
+		
+		try {
+			this.userAccountService.create(user);
+		}
+		catch (Exception e) {
+			String message = String.format("Username %s already exists", user.getUsername());
+			log.info(message, e);
+			result.addError(new ObjectError("username", message));
+			return "userForm";
+		}
+		
 		// this.sendEmail(user);
 		return "redirect:/board/users/userDetails?username=" + user.getUsername();
 	}
