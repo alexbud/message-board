@@ -28,6 +28,10 @@
 <form:form commandName="user" method="post">
 	<table>
 		<tr>
+			<td><form:errors cssClass="error"/></td>
+		</tr>
+		<tr><td> </td></tr>
+		<tr>
 			<td>Username:</td>
 			<td><form:input path="username" size="50"/></td>
 			<td><form:errors path="username" cssClass="error"/></td>
@@ -40,7 +44,6 @@
 		<tr>
 			<td>Confirm password:</td>
 			<td><form:password path="passwordConfirm" size="50"/></td>
-			<td><form:errors cssClass="error"/></td>
 		</tr>
 		<tr>
 			<td colspan="3"><input type="submit" value="Save"/>

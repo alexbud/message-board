@@ -129,7 +129,7 @@ public class UserAccountController {
 			this.userAccountService.create(user);
 		}
 		catch (ConstraintViolationException e) {
-			String message = String.format("Username %s already exists", user.getUsername());
+			String message = String.format("User %s already exists", user.getUsername());
 			result.addError(new ObjectError("user", message));
 			return "userForm";
 		}
