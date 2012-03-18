@@ -31,6 +31,7 @@ import org.springframework.validation.BeanPropertyBindingResult;
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = { "classpath:app-config.xml" })
+@Transactional
 public abstract class UserAccountControllerTests {
 
 	@Autowired
@@ -52,11 +53,9 @@ public abstract class UserAccountControllerTests {
 	}
 
 	/**
-	 * Test for
-	 * {@link UserAccountController#userDetails(String, org.springframework.ui.Model)}
+	 * Test for {@link UserAccountController#userDetails(String, org.springframework.ui.Model)}
 	 */
 	@Test
-	@Transactional
 	public void testHandleUserDetailsRequest() {
 		ExtendedModelMap model = new ExtendedModelMap();
 		final String username = "admin";
@@ -69,11 +68,9 @@ public abstract class UserAccountControllerTests {
 	}
 
 	/**
-	 * Test for
-	 * {@link UserAccountController#getEditUser(String, org.springframework.ui.Model)
+	 * Test for {@link UserAccountController#getEditUser(String, org.springframework.ui.Model)
 	 */
 	@Test
-	@Transactional
 	public void testHandleGetEditUserRequest() {
 		ExtendedModelMap model = new ExtendedModelMap();
 		final String username = "admin";
@@ -86,11 +83,9 @@ public abstract class UserAccountControllerTests {
 	}
 
 	/**
-	 * Test for
-	 * {@link UserAccountController#getCreateUser(String, org.springframework.ui.Model)
+	 * Test for {@link UserAccountController#getCreateUser(String, org.springframework.ui.Model)
 	 */
 	@Test
-	@Transactional
 	public void testHandleGetCreateUserRequest() {
 		ExtendedModelMap model = new ExtendedModelMap();
 		String viewName = this.controller.getCreateUser(model);
@@ -105,7 +100,6 @@ public abstract class UserAccountControllerTests {
 	 *             {@link UserAccountController#postCreateUser(UserACcount, org.springframework.validation.BindingResult)
 	 */
 	@Test
-	@Transactional
 	public void testHandlePostCreateUserRequest() throws NoSuchAlgorithmException {
 		UserAccount user = new UserAccount("user", "password", "password", UserRole.ROLE_MEMBER);
 		String viewName = this.controller.postCreateUser(user, new BeanPropertyBindingResult(user, "user"));
@@ -127,7 +121,6 @@ public abstract class UserAccountControllerTests {
 	 *             {@link UserAccountController#postEditUser(UserAccount, org.springframework.validation.BindingResult)
 	 */
 	@Test
-	@Transactional
 	public void testHandlePostEditUserRequest() throws NoSuchAlgorithmException {
 		// let's create a user account first
 		UserAccount user = new UserAccount("user", "password", "password", UserRole.ROLE_MEMBER);
@@ -155,7 +148,6 @@ public abstract class UserAccountControllerTests {
 	 *             {@link UserAccountController#removeUser(String, org.springframework.ui.Model)
 	 */
 	@Test
-	@Transactional
 	public void testHandleRemoveUserRequest() throws NoSuchAlgorithmException {
 		final int initialUserSize = this.userAccountService.getAllUsers().size();
 		assertEquals(4, initialUserSize);
@@ -176,12 +168,10 @@ public abstract class UserAccountControllerTests {
 	}
 
 	/**
-	 * Test for
-	 * {@link UserAccountController#userSummary(org.springframework.ui.Model)}
+	 * Test for {@link UserAccountController#userSummary(org.springframework.ui.Model)}
 	 */
 	@SuppressWarnings("unchecked")
 	@Test
-	@Transactional
 	public void testHandleUserSummaryRequest() {
 		ExtendedModelMap model = new ExtendedModelMap();
 		String viewName = this.controller.userSummary(model);
