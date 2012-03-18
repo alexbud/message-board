@@ -53,7 +53,7 @@ public abstract class UserAccountControllerTests {
 	}
 
 	/**
-	 * Test for {@link UserAccountController#userDetails(String, org.springframework.ui.Model)}
+	 * Test for {@link UserAccountController#userDetails(String, org.springframework.ui.Model)}.
 	 */
 	@Test
 	public void testHandleUserDetailsRequest() {
@@ -68,7 +68,7 @@ public abstract class UserAccountControllerTests {
 	}
 
 	/**
-	 * Test for {@link UserAccountController#getEditUser(String, org.springframework.ui.Model)
+	 * Test for {@link UserAccountController#getEditUser(String, org.springframework.ui.Model)}.
 	 */
 	@Test
 	public void testHandleGetEditUserRequest() {
@@ -83,7 +83,7 @@ public abstract class UserAccountControllerTests {
 	}
 
 	/**
-	 * Test for {@link UserAccountController#getCreateUser(String, org.springframework.ui.Model)
+	 * Test for {@link UserAccountController#getCreateUser(String, org.springframework.ui.Model)}.
 	 */
 	@Test
 	public void testHandleGetCreateUserRequest() {
@@ -96,8 +96,7 @@ public abstract class UserAccountControllerTests {
 	}
 
 	/**
-	 * @throws NoSuchAlgorithmException Test for
-	 *             {@link UserAccountController#postCreateUser(UserACcount, org.springframework.validation.BindingResult)
+	 * Test for {@link UserAccountController#postCreateUser(UserACcount, org.springframework.validation.BindingResult)}.
 	 */
 	@Test
 	public void testHandlePostCreateUserRequest() throws NoSuchAlgorithmException {
@@ -117,8 +116,7 @@ public abstract class UserAccountControllerTests {
 	}
 
 	/**
-	 * @throws NoSuchAlgorithmException Test for
-	 *             {@link UserAccountController#postEditUser(UserAccount, org.springframework.validation.BindingResult)
+	 * Test for {@link UserAccountController#postEditUser(UserAccount, org.springframework.validation.BindingResult)}.
 	 */
 	@Test
 	public void testHandlePostEditUserRequest() throws NoSuchAlgorithmException {
@@ -144,8 +142,7 @@ public abstract class UserAccountControllerTests {
 	}
 
 	/**
-	 * @throws NoSuchAlgorithmException Test for
-	 *             {@link UserAccountController#removeUser(String, org.springframework.ui.Model)
+	 * Test for {@link UserAccountController#removeUser(String, org.springframework.ui.Model)}.
 	 */
 	@Test
 	public void testHandleRemoveUserRequest() throws NoSuchAlgorithmException {
@@ -168,7 +165,7 @@ public abstract class UserAccountControllerTests {
 	}
 
 	/**
-	 * Test for {@link UserAccountController#userSummary(org.springframework.ui.Model)}
+	 * Test for {@link UserAccountController#userSummary(org.springframework.ui.Model)}.
 	 */
 	@SuppressWarnings("unchecked")
 	@Test
