@@ -27,11 +27,11 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
- * An integration test for {@link UserAccountService}. Test uses in-memory
- * database.
+ * An integration test for {@link UserAccountService}. Test uses in-memory database.
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = { "classpath:app-config.xml" })
+@Transactional
 public abstract class UserAccountServiceTest {
 
 	@Autowired
@@ -50,7 +50,6 @@ public abstract class UserAccountServiceTest {
 	 * Test for {@link UserAccountService#getAllUsers()}.
 	 */
 	@Test
-	@Transactional
 	public void testGetAllUsers() {
 		List<UserAccount> users = this.userAccountService.getAllUsers();
 		assertNotNull(users.get(0).getAuthorities());
@@ -61,7 +60,6 @@ public abstract class UserAccountServiceTest {
 	 * Test for {@link UserAccountService#findByUsername(String)}.
 	 */
 	@Test
-	@Transactional
 	public void testFindByUsername() {
 		final String username = "admin";
 		UserAccount account = this.userAccountService.findByUsername(username);
@@ -75,7 +73,6 @@ public abstract class UserAccountServiceTest {
 	 * @throws NoSuchAlgorithmException
 	 */
 	@Test
-	@Transactional
 	public void testUpdateAccount() throws NoSuchAlgorithmException {
 		final String username = "admin";
 		UserAccount oldAccount = this.userAccountService.findByUsername(username);
@@ -99,13 +96,11 @@ public abstract class UserAccountServiceTest {
 	}
 
 	/**
-	 * Test for {@link UserAccountService#update(UserAccount)}. Authorization
-	 * test for update and delete a account.
+	 * Test for {@link UserAccountService#update(UserAccount)}. Authorization test for update and delete a account.
 	 * 
 	 * @throws NoSuchAlgorithmException
 	 */
 	@Test
-	@Transactional
 	public void testUpdateDeleteAccountNotAuthorized() throws NoSuchAlgorithmException {
 		// ROLE_ADMIN user
 		SecurityContextHolder.getContext().setAuthentication(
@@ -150,7 +145,6 @@ public abstract class UserAccountServiceTest {
 	 * @throws NoSuchAlgorithmException
 	 */
 	@Test
-	@Transactional
 	public void testCreateAccount() throws NoSuchAlgorithmException {
 		UserAccount account = new UserAccount();
 		account.setUsername("name");
@@ -164,18 +158,27 @@ public abstract class UserAccountServiceTest {
 		assertNotNull(passwordHashed);
 		assertNotSame("new password wasn't hashed", password, passwordHashed);
 		assertNotNull(account.getTimestamp());
-		// test mandatory field validation
-		account = new UserAccount();
+	}
+
+	/**
+	 * Test for {@link UserAccountService#create(UserAccount)} for validation of user account fields.
+	 * 
+	 * @throws NoSuchAlgorithmException
+	 */
+	@Test
+	public void testCreateAccountValidationFailed() throws NoSuchAlgorithmException {
+		// empty object
+		UserAccount account = new UserAccount();
 		try {
 			this.userAccountService.create(account);
-			fail("should trigger an exception");
-		} catch (Exception e) {
+			fail("should trigger an exception, because of null password in preparePassword");
+		} catch (NullPointerException e) {
 			// as expected
 		}
-		account.setUsername("username");
+
+		// SUCCESS
 		account.setPassword("password");
-		account.setPasswordConfirm("password");
-		account.addAuthority(UserRole.ROLE_MEMBER);
+		account.setUsername("username");
 		this.userAccountService.create(account);
 	}
 
@@ -183,7 +186,6 @@ public abstract class UserAccountServiceTest {
 	 * Test for {@link UserAccountService#remove(UserAccount)}.
 	 */
 	@Test
-	@Transactional
 	public void testRemoveAccount() {
 		final String username = "admin";
 		UserAccount account = this.userAccountService.findByUsername(username);
