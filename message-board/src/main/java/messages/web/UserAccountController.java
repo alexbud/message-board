@@ -3,11 +3,13 @@ package messages.web;
 import java.security.NoSuchAlgorithmException;
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import messages.orm.UserAccount;
 import messages.orm.UserRole;
 import messages.repository.user.UserAccountService;
+import nl.captcha.Captcha;
 
 import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,14 +25,13 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 /**
- * Action based Spring MVC @Controller controller handling requests for user
- * account summary, user account details, edit user account form, create user
- * account form, remove user account.
+ * Action based Spring MVC @Controller controller handling requests for user account summary, user account details, edit
+ * user account form, create user account form, remove user account.
  */
 @Controller
 @RequestMapping(value = "/users")
 public class UserAccountController {
-	
+
 	private UserAccountService userAccountService;
 
 	private MailSender mailSender;
@@ -57,8 +58,7 @@ public class UserAccountController {
 	}
 
 	/**
-	 * Provides a model with an user account for the user account form page to
-	 * edit a user account
+	 * Provides a model with an user account for the user account form page to edit a user account
 	 * 
 	 * @param password the username of the user
 	 * @param model the "implicit" model created by Spring MVC
@@ -115,25 +115,28 @@ public class UserAccountController {
 	 * @throws NoSuchAlgorithmException
 	 */
 	@RequestMapping(value = "/createUser", method = RequestMethod.POST)
-	public String postCreateUser(@ModelAttribute("user") @Valid UserAccount user, BindingResult result)
-			throws NoSuchAlgorithmException {
+	public String postCreateUser(@ModelAttribute("user") @Valid UserAccount user, BindingResult result,
+			HttpSession session) throws NoSuchAlgorithmException {
+		Captcha captcha = (Captcha) session.getAttribute(Captcha.NAME);
+        if (captcha == null || captcha.isCorrect(user.getCaptcha()) == false) {
+        	result.addError(new ObjectError("user", "Invalid image characters"));
+        }
 		// if validation fails then error
 		if (result.hasErrors()) {
 			return "userForm";
 		}
-		
+
 		// set member role for all new users
 		user.addAuthority(UserRole.ROLE_MEMBER);
-		
+
 		try {
 			this.userAccountService.create(user);
-		}
-		catch (ConstraintViolationException e) {
+		} catch (ConstraintViolationException e) {
 			String message = String.format("User %s already exists", user.getUsername());
 			result.addError(new ObjectError("user", message));
 			return "userForm";
 		}
-		
+
 		// this.sendEmail(user);
 		return "redirect:/board/users/userDetails?username=" + user.getUsername();
 	}

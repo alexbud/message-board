@@ -27,9 +27,7 @@ import org.hibernate.validator.constraints.NotEmpty;
  */
 @Entity
 @Table(name = "T_USER")
-@FieldMatch.List({
-    @FieldMatch(first = "password", second = "passwordConfirm", message = "The password fields must match")
-})
+@FieldMatch.List({ @FieldMatch(first = "password", second = "passwordConfirm", message = "The password fields must match") })
 public class UserAccount {
 
 	@Id
@@ -46,6 +44,9 @@ public class UserAccount {
 
 	@Transient
 	private String passwordConfirm;
+
+	@Transient
+	private String captcha;
 
 	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
 	@JoinColumn(name = "USERNAME")
@@ -121,10 +122,28 @@ public class UserAccount {
 	}
 
 	/**
+	 * Transient field used for account registration validation.
+	 * 
 	 * @param passwordConfirm
 	 */
 	public void setPasswordConfirm(String passwordConfirm) {
 		this.passwordConfirm = passwordConfirm;
+	}
+
+	/**
+	 * @return captcha
+	 */
+	public String getCaptcha() {
+		return captcha;
+	}
+
+	/**
+	 * Transient field used for account registration validation.
+	 * 
+	 * @param captcha
+	 */
+	public void setCaptcha(String captcha) {
+		this.captcha = captcha;
 	}
 
 	/**

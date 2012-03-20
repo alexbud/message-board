@@ -46,6 +46,13 @@
 			<td><form:password path="passwordConfirm" size="50"/></td>
 		</tr>
 		<tr>
+			<td class="input-selitesarake">
+				 <!-- Firefox caching issue workaround -->
+				 <img src="/message-board/captchaImg?uid=<%=Long.toString(new java.util.Date().getTime()) %>" />
+			</td>
+			<td><form:input path="captcha" size="50"/></td>
+		</tr>
+		<tr>
 			<td colspan="3"><input type="submit" value="Save"/>
 				<security:authorize access="isAuthenticated()">
 					<a href="<%= request.getContextPath() %>/board/users/userDetails?username=${user.username}"><input type="button" value="Cancel"/></a>
