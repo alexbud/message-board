@@ -48,7 +48,7 @@
 		<tr>
 			<td class="input-selitesarake">
 				 <!-- Firefox caching issue workaround -->
-				 <img src="/message-board/captchaImg?uid=<%=Long.toString(new java.util.Date().getTime()) %>" />
+				 <img src="/captchaImg?uid=<%=Long.toString(new java.util.Date().getTime()) %>" />
 			</td>
 			<td><form:input path="captcha" size="50"/></td>
 		</tr>
