@@ -12,12 +12,16 @@ import messages.orm.UserAuthority;
 import messages.orm.UserRole;
 import messages.repository.user.UserAccountService;
 import messages.web.UserAccountController;
+import nl.captcha.Captcha;
+import nl.captcha.Captcha.Builder;
+import nl.captcha.text.renderer.ColoredEdgesWordRenderer;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.MailSender;
+import org.springframework.mock.web.MockHttpSession;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.test.context.ContextConfiguration;
@@ -41,6 +45,10 @@ public abstract class UserAccountControllerTests {
 	private MailSender mailSender;
 
 	private UserAccountController controller;
+	
+	private Captcha captcha;
+	
+	private MockHttpSession session;
 
 	/**
 	 * Test setup.
@@ -50,6 +58,16 @@ public abstract class UserAccountControllerTests {
 		this.controller = new UserAccountController(this.userAccountService, this.mailSender);
 		SecurityContextHolder.getContext().setAuthentication(
 				new UsernamePasswordAuthenticationToken("admin", "password"));
+		
+		session = new MockHttpSession();
+		
+		 //captcha
+        Builder builder = new Captcha.Builder(100, 100);
+        ColoredEdgesWordRenderer coloredEdgesWordRenderer = new ColoredEdgesWordRenderer();
+        builder.addText(coloredEdgesWordRenderer);
+        this.captcha = builder.build();
+        this.captcha.getImage();
+        session.setAttribute(Captcha.NAME, this.captcha);
 	}
 
 	/**
@@ -94,6 +112,20 @@ public abstract class UserAccountControllerTests {
 		assertNotNull(user);
 		assertNull(user.getPassword());
 	}
+	
+	/**
+	 * Test for {@link UserAccountController#postCreateUser(UserACcount, org.springframework.validation.BindingResult)}.
+	 */
+	@Test
+	public void testHandlePostCreateUserRequestWrongCaptcha() throws NoSuchAlgorithmException {
+		UserAccount user = new UserAccount("user", "password", "password", UserRole.ROLE_MEMBER);
+		// no captcha for the user
+		assertNull(user.getCaptcha());
+		String viewName = this.controller.postCreateUser(user, new BeanPropertyBindingResult(user, "user"), this.session);
+		assertEquals("userForm", viewName);
+		assertNotNull(user);
+		assertNotNull(user.getPassword());
+	}
 
 	/**
 	 * Test for {@link UserAccountController#postCreateUser(UserACcount, org.springframework.validation.BindingResult)}.
@@ -101,7 +133,8 @@ public abstract class UserAccountControllerTests {
 	@Test
 	public void testHandlePostCreateUserRequest() throws NoSuchAlgorithmException {
 		UserAccount user = new UserAccount("user", "password", "password", UserRole.ROLE_MEMBER);
-		String viewName = this.controller.postCreateUser(user, new BeanPropertyBindingResult(user, "user"));
+		user.setCaptcha(this.captcha.getAnswer());
+		String viewName = this.controller.postCreateUser(user, new BeanPropertyBindingResult(user, "user"), this.session);
 		assertEquals("redirect:/board/users/userDetails?username=" + user.getUsername(), viewName);
 		assertNotNull(user);
 		assertNotNull(user.getPassword());
@@ -122,7 +155,7 @@ public abstract class UserAccountControllerTests {
 	public void testHandlePostEditUserRequest() throws NoSuchAlgorithmException {
 		// let's create a user account first
 		UserAccount user = new UserAccount("user", "password", "password", UserRole.ROLE_MEMBER);
-		this.controller.postCreateUser(user, new BeanPropertyBindingResult(user, "user"));
+		this.controller.postCreateUser(user, new BeanPropertyBindingResult(user, "user"), this.session);
 		assertNotNull(user.getPassword());
 		// update some field
 		final UserRole newAuthority = UserRole.ROLE_VIEWER;
@@ -150,7 +183,8 @@ public abstract class UserAccountControllerTests {
 		assertEquals(4, initialUserSize);
 		// let's create a user first
 		UserAccount user = new UserAccount("newuser", "newpassword", "newpassword", UserRole.ROLE_MEMBER);
-		this.controller.postCreateUser(user, new BeanPropertyBindingResult(user, "user"));
+		user.setCaptcha(this.captcha.getAnswer());
+		this.controller.postCreateUser(user, new BeanPropertyBindingResult(user, "user"), this.session);
 		assertNotNull(user.getPassword());
 		final int size = this.userAccountService.getAllUsers().size();
 		assertEquals(initialUserSize + 1, size);
