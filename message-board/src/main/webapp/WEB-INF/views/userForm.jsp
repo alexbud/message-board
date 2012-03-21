@@ -45,7 +45,7 @@
 			<td>Confirm password:</td>
 			<td><form:password path="passwordConfirm" size="50"/></td>
 		</tr>
-		<security:authorize access="isAuthenticated()">
+		<security:authorize access="isAnonymous()">
 			<tr>
 				<td class="input-selitesarake">
 					 <!-- Firefox caching issue workaround -->
