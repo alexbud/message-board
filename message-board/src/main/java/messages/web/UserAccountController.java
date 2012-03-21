@@ -11,6 +11,8 @@ import messages.orm.UserRole;
 import messages.repository.user.UserAccountService;
 import nl.captcha.Captcha;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.MailSender;
@@ -31,6 +33,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 @Controller
 @RequestMapping(value = "/users")
 public class UserAccountController {
+	
+	private Log log = LogFactory.getLog(this.getClass());
 
 	private UserAccountService userAccountService;
 
@@ -154,7 +158,14 @@ public class UserAccountController {
 		if (result.hasErrors()) {
 			return "userForm";
 		}
-		this.userAccountService.update(user);
+		try {
+			this.userAccountService.update(user);
+		}
+		catch (Exception e) {
+			log.error("Error while updating an account: " + user, e);
+			result.addError(new ObjectError("user", "Internal error"));
+			return "userForm";
+		}
 		return "redirect:/board/users/userDetails?username=" + user.getUsername();
 	}
 

@@ -45,13 +45,15 @@
 			<td>Confirm password:</td>
 			<td><form:password path="passwordConfirm" size="50"/></td>
 		</tr>
-		<tr>
-			<td class="input-selitesarake">
-				 <!-- Firefox caching issue workaround -->
-				 <img src="/captchaImg?uid=<%=Long.toString(new java.util.Date().getTime()) %>" />
-			</td>
-			<td><form:input path="captcha" size="50"/></td>
-		</tr>
+		<security:authorize access="isAuthenticated()">
+			<tr>
+				<td class="input-selitesarake">
+					 <!-- Firefox caching issue workaround -->
+					 <img src="/captchaImg?uid=<%=Long.toString(new java.util.Date().getTime()) %>" />
+				</td>
+				<td><form:input path="captcha" size="50"/></td>
+			</tr>
+		</security:authorize>
 		<tr>
 			<td colspan="3"><input type="submit" value="Save"/>
 				<security:authorize access="isAuthenticated()">
