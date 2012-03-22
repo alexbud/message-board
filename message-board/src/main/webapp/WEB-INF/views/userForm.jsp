@@ -38,7 +38,7 @@
 				<td><form:errors path="username" cssClass="error"/></td>
 			</security:authorize>
 			<security:authorize access="isAuthenticated()">
-				<td><form:label path="username"/></td>
+				<td><security:authentication property="principal.username"/></td>
 			</security:authorize>
 		</tr>
 		<tr>
