@@ -24,6 +24,7 @@
 	<security:authorize access="hasRole('ROLE_ADMIN')">
 		<p><a href="board/users/userSummary">View User Summary</a></p>
 	</security:authorize>
+	<p><a href="<%= request.getContextPath() %>/board/users/userDetails?username=<security:authentication property="principal.username"/>"><input type="button" value="User Details"/></a></p>
 	<p><a href="<c:url value="/board/messages/j_spring_security_logout"/>"><input type="button" value="Logout (<security:authentication property="principal.username"/>)"/></a></p>
 </security:authorize>
 <security:authorize access="isAnonymous()">
