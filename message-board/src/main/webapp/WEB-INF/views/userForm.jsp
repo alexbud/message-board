@@ -33,8 +33,13 @@
 		<tr><td> </td></tr>
 		<tr>
 			<td>Username:</td>
-			<td><form:input path="username" size="50"/></td>
-			<td><form:errors path="username" cssClass="error"/></td>
+			<security:authorize access="isAnonymous()">
+				<td><form:input path="username" size="50"/></td>
+				<td><form:errors path="username" cssClass="error"/></td>
+			</security:authorize>
+			<security:authorize access="isAuthenticated()">
+				<td><form:label path="username"/></td>
+			</security:authorize>
 		</tr>
 		<tr>
 			<td>Password:</td>
@@ -49,7 +54,7 @@
 			<tr>
 				<td class="input-selitesarake">
 					 <!-- Firefox caching issue workaround -->
-					 <img src="/captchaImg?uid=<%=Long.toString(new java.util.Date().getTime()) %>" />
+					 <img src="<%= request.getContextPath() %>/captchaImg?uid=<%=Long.toString(new java.util.Date().getTime()) %>" />
 				</td>
 				<td><form:input path="captcha" size="50"/></td>
 			</tr>
