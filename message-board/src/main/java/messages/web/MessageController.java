@@ -7,6 +7,7 @@ import javax.validation.Valid;
 import messages.orm.Message;
 import messages.repository.message.MessageService;
 
+import org.springframework.amqp.core.AmqpTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.MailSender;
 import org.springframework.mail.SimpleMailMessage;
@@ -30,6 +31,9 @@ public class MessageController {
 	private MessageService messageService;
 
 	private MailSender mailSender;
+	
+	@Autowired 
+	private AmqpTemplate amqpTemplate;
 
 	/**
 	 * Creates a new MessageController with a given message service.
@@ -145,7 +149,7 @@ public class MessageController {
 		if (result.hasErrors()) {
 			return "messageForm";
 		}
-		
+		this.amqpTemplate.convertAndSend("messages", message.toString());
 		return "published";
 	}
 	
@@ -156,7 +160,8 @@ public class MessageController {
 	 */
 	@RequestMapping(value = "/getMessageFromQueue", method = RequestMethod.GET)
 	public String getMessageFromQueue(Model model) {
-		model.addAttribute("message", new Message("sfgvsdfigsisguig"));
+		String message = (String) this.amqpTemplate.receiveAndConvert("messages");
+		model.addAttribute("message", message);
 		return "messageDetailsFromQueue";
 	}
 
