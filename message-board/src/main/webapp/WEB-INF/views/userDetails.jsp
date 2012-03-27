@@ -58,7 +58,7 @@
 		</c:otherwise>
 	</c:choose>
 </security:authorize>
-<%-- <a href="<%= request.getContextPath() %>/board/messages/messageSummary"><input type="button" value="Message Summary"/></a> --%>
+
 <a href="<c:url value="/board/messages/j_spring_security_logout"/>"><input type="button" value="Logout (<security:authentication property="principal.username"/>)"/></a>
 </p>
 

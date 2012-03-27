@@ -72,12 +72,9 @@
 	<a href="<%= request.getContextPath() %>/board/users/userSummary"><input type="button" value="User Summary"/></a>
 </security:authorize>
 <security:authorize access="isAuthenticated()">
-	<%-- <a href="<%= request.getContextPath() %>/board/messages/messageSummary"><input type="button" value="Message Summary"/></a> --%>
 	<a href="<c:url value="/board/users/j_spring_security_logout"/>"><input type="button" value="Logout (<security:authentication property="principal.username"/>)"/></a>
 </security:authorize>
-<%-- <security:authorize access="isAnonymous()">
-	<a href="<%= request.getContextPath() %>/board/messages/messageSummary"><input type="button" value="Cancel"/></a>
-</security:authorize> --%>
+
 </div>
 </body>
 

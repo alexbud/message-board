@@ -26,7 +26,6 @@
 
 <a href="<%= request.getContextPath() %>"><input type="button" value="Home page"/></a>
 
-<%-- <a href="<%= request.getContextPath() %>/board/messages/messageSummary"><input type="button" value="Message Summary"/></a> --%>
 <a href="<c:url value="/board/users/j_spring_security_logout"/>"><input type="button" value="Logout (<security:authentication property="principal.username"/>)"/></a>
 
 </div>

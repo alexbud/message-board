@@ -13,6 +13,7 @@
 		<!-- unified location for version numbers. -->
 		<spring.framework.version>3.1.1.RELEASE</spring.framework.version>
 		<spring.security.version>3.1.0.RELEASE</spring.security.version>
+		<spring.rabbit.version>1.0.0.RELEASE</spring.rabbit.version>
 		<spring.framework.ws.version>2.0.3.RELEASE</spring.framework.ws.version>
 		<hibernate.version>3.5.6-Final</hibernate.version>
 		<hibernate.annotations.version>3.5.6-Final</hibernate.annotations.version>
@@ -341,6 +342,11 @@
 				</exclusion>
 			</exclusions>
 		</dependency>
+		<dependency>
+         	 <groupId>org.springframework.amqp</groupId>
+          	 <artifactId>spring-rabbit</artifactId>
+          	 <version>${spring.rabbit.version}</version>
+      	</dependency>
 		<!-- Database dependencies -->
 		<dependency>
 			<groupId>org.hsqldb</groupId>

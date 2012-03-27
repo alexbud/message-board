@@ -45,7 +45,7 @@
 		<form:hidden path="principal" />
 		<tr>
 			<td colspan="3"><input type="submit" value="Save"/>
-			<a href="<%= request.getContextPath() %>/board/messages/messageSummary"><input type="button" value="Cancel"/></a>
+				<a href="<%= request.getContextPath() %>/board/messages/messageSummary"><input type="button" value="Cancel"/></a>
 			</td>
 		</tr>
 	</table>
