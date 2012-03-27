@@ -35,11 +35,15 @@
 
 <p>
 
+<a href="<%= request.getContextPath() %>"><input type="button" value="Home page"/></a>
+
 <security:authentication var="username" property="principal.username"/>
 <security:authorize access="isAuthenticated()">
 	<c:choose>
 		<c:when test="${user.username == username}">
-			<a href="<%= request.getContextPath() %>/board/users/editUser?name=${user.username}"><input type="button" value="Edit"/></a>
+			<security:authorize access="hasRole('ROLE_MEMBER')">
+				<a href="<%= request.getContextPath() %>/board/users/editUser?name=${user.username}"><input type="button" value="Edit"/></a>
+			</security:authorize>
 			<security:authorize access="hasRole('ROLE_ADMIN')">
 				<a href="<%= request.getContextPath() %>/board/users/removeUser?username=${user.username}"><input type="button" value="Delete"/></a>
 				<a href="<%= request.getContextPath() %>/board/users/userSummary"><input type="button" value="User Summary"/></a>
@@ -54,7 +58,7 @@
 		</c:otherwise>
 	</c:choose>
 </security:authorize>
-<a href="<%= request.getContextPath() %>/board/messages/messageSummary"><input type="button" value="Message Summary"/></a>
+<%-- <a href="<%= request.getContextPath() %>/board/messages/messageSummary"><input type="button" value="Message Summary"/></a> --%>
 <a href="<c:url value="/board/messages/j_spring_security_logout"/>"><input type="button" value="Logout (<security:authentication property="principal.username"/>)"/></a>
 </p>
 

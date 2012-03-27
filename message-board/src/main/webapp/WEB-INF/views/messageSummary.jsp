@@ -19,14 +19,17 @@
 <h1>Message Summary</h1>
 
 <p>
+
+<a href="<%= request.getContextPath() %>"><input type="button" value="Home page"/></a>
+
 <security:authorize access="hasRole('ROLE_MEMBER')">
 	<a href="<%= request.getContextPath() %>/board/messages/createMessage"><input type="button" value="Create Message"/></a>
-	<a href="<%= request.getContextPath() %>/board/users/userDetails?username=<security:authentication property="principal.username"/>"><input type="button" value="User Details"/></a>
+	<%-- <a href="<%= request.getContextPath() %>/board/users/userDetails?username=<security:authentication property="principal.username"/>"><input type="button" value="User Details"/></a> --%>
 </security:authorize>
 
-<security:authorize access="hasRole('ROLE_ADMIN')">
+<%-- <security:authorize access="hasRole('ROLE_ADMIN')">
 	<a href="<%= request.getContextPath() %>/board/users/userSummary"><input type="button" value="User Summary"/></a>
-</security:authorize>
+</security:authorize> --%>
 
 <a href="<c:url value="/board/messages/j_spring_security_logout"/>"><input type="button" value="Logout (<security:authentication property="principal.username"/>)"/></a>
 </p>

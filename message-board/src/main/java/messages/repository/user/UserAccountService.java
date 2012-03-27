@@ -28,7 +28,6 @@ public interface UserAccountService {
 	 * @param username
 	 * @return the user account
 	 */
-	@RolesAllowed("ROLE_MEMBER")
 	public UserAccount findByUsername(String username);
 
 	/**
