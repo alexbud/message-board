@@ -1,5 +1,6 @@
 package messages.web;
 
+import java.sql.Timestamp;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -11,8 +12,10 @@ import org.springframework.amqp.core.AmqpTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.MailSender;
 import org.springframework.mail.SimpleMailMessage;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.Assert;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -149,7 +152,12 @@ public class MessageController {
 		if (result.hasErrors()) {
 			return "messageForm";
 		}
-		this.amqpTemplate.convertAndSend("messages", message.toString());
+		String principal = SecurityContextHolder.getContext()
+				.getAuthentication().getName();
+		Assert.notNull(principal);
+		message.setPrincipal(principal);
+		message.setTimestamp(new Timestamp(System.currentTimeMillis()));
+		this.amqpTemplate.convertAndSend("messages", message);
 		return "published";
 	}
 	
@@ -160,7 +168,7 @@ public class MessageController {
 	 */
 	@RequestMapping(value = "/getMessageFromQueue", method = RequestMethod.GET)
 	public String getMessageFromQueue(Model model) {
-		String message = (String) this.amqpTemplate.receiveAndConvert("messages");
+		Message message = (Message) this.amqpTemplate.receiveAndConvert("messages");
 		model.addAttribute("message", message);
 		return "messageDetailsFromQueue";
 	}
