@@ -1,6 +1,7 @@
 package messages.web;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -34,8 +35,8 @@ public class MessageController {
 	private MessageService messageService;
 
 	private MailSender mailSender;
-	
-	@Autowired 
+
+	@Autowired
 	private AmqpTemplate amqpTemplate;
 
 	/**
@@ -91,7 +92,7 @@ public class MessageController {
 	 * @param entityId
 	 * @param model the "implicit" model created by Spring MVC
 	 */
-	@RequestMapping(value = {"/createMessage", "/publishMessage"}, method = RequestMethod.GET)
+	@RequestMapping(value = { "/createMessage", "/publishMessage" }, method = RequestMethod.GET)
 	public String getCreateMessage(Model model) {
 		Message message = new Message();
 		model.addAttribute("message", message);
@@ -140,7 +141,7 @@ public class MessageController {
 		this.messageService.update(message);
 		return "redirect:/board/messages/messageDetails?entityId=" + message.getEntityId();
 	}
-	
+
 	/**
 	 * Publishes a message to a queue.
 	 * 
@@ -152,15 +153,14 @@ public class MessageController {
 		if (result.hasErrors()) {
 			return "messageForm";
 		}
-		String principal = SecurityContextHolder.getContext()
-				.getAuthentication().getName();
+		String principal = SecurityContextHolder.getContext().getAuthentication().getName();
 		Assert.notNull(principal);
 		message.setPrincipal(principal);
 		message.setTimestamp(new Timestamp(System.currentTimeMillis()));
 		this.amqpTemplate.convertAndSend("messages", message);
 		return "published";
 	}
-	
+
 	/**
 	 * Retrieves a message from queue.
 	 * 
@@ -168,9 +168,16 @@ public class MessageController {
 	 */
 	@RequestMapping(value = "/getMessageFromQueue", method = RequestMethod.GET)
 	public String getMessageFromQueue(Model model) {
-		Message message = (Message) this.amqpTemplate.receiveAndConvert("messages");
-		model.addAttribute("message", message);
-		return "messageDetailsFromQueue";
+		List<Message> messages = new ArrayList<Message>();
+		Message message = null;
+		do {
+			message = (Message) this.amqpTemplate.receiveAndConvert("messages");
+			if (message != null) {
+				messages.add(message);
+			}
+		} while (message != null);
+		model.addAttribute("messages", messages);
+		return "messageSummaryFromQueue";
 	}
 
 	private void sendEmail(Message message) {
