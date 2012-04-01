@@ -8,7 +8,7 @@
 	<packaging>war</packaging>
 	<name>Message Board</name>
 	<properties>
-		<maven.build.timestamp.format>dd.MM.yyyy-HH:mm:ss</maven.build.timestamp.format>
+		<maven.build.timestamp.format>dd.MM.yyyy-HH:mm:ss Z</maven.build.timestamp.format>
 		<build.timestamp>${maven.build.timestamp}</build.timestamp>
 		<!-- unified location for version numbers. -->
 		<spring.framework.version>3.1.1.RELEASE</spring.framework.version>
