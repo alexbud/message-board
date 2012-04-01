@@ -24,9 +24,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 /**
- * Action based Spring MVC @Controller controller handling requests for message
- * summary, message details, edit message form, create message form, remove
- * message.
+ * Action based Spring MVC @Controller controller handling requests for message summary, message details, edit message
+ * form, create message form, remove message.
  */
 @Controller
 @RequestMapping(value = "/messages")
@@ -61,8 +60,7 @@ public class MessageController {
 	}
 
 	/**
-	 * Provides a model with an message for the message form page to edit a
-	 * message
+	 * Provides a model with an message for the message form page to edit a message
 	 * 
 	 * @param id the id of the message
 	 * @param model the "implicit" model created by Spring MVC
@@ -162,12 +160,12 @@ public class MessageController {
 	}
 
 	/**
-	 * Retrieves a message from queue.
+	 * Retrieves all messages from queue.
 	 * 
 	 * @param model the "implicit" model created by Spring MVC
 	 */
-	@RequestMapping(value = "/getMessageFromQueue", method = RequestMethod.GET)
-	public String getMessageFromQueue(Model model) {
+	@RequestMapping(value = "/getMessagesFromQueue", method = RequestMethod.GET)
+	public String getMessagesFromQueue(Model model) {
 		List<Message> messages = new ArrayList<Message>();
 		Message message = null;
 		do {

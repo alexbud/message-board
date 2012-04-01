@@ -25,7 +25,7 @@
 <security:authorize access="hasRole('ROLE_MEMBER')">
 	<a href="<%= request.getContextPath() %>/board/messages/createMessage"><input type="button" value="Create Message"/></a>
 	<a href="<%= request.getContextPath() %>/board/messages/publishMessage"><input type="button" value="Publish Message"/></a>
-	<a href="<%= request.getContextPath() %>/board/messages/getMessageFromQueue"><input type="button" value="Get Message From Queue"/></a>
+	<a href="<%= request.getContextPath() %>/board/messages/getMessagesFromQueue"><input type="button" value="Get Messages From Queue"/></a>
 </security:authorize>
 
 <a href="<c:url value="/board/messages/j_spring_security_logout"/>"><input type="button" value="Logout (<security:authentication property="principal.username"/>)"/></a>
