@@ -40,6 +40,7 @@
 		<cloudfoundry.runtime.version>0.8.1</cloudfoundry.runtime.version>
 		<mysql.version>5.1.15</mysql.version>
 		<simplecaptcha.version>1.1.1-GA-Patch01</simplecaptcha.version>
+		<quartz.version>1.8.6</quartz.version>
 	</properties>
 	<build>
 		<resources>
@@ -572,6 +573,11 @@
 			<artifactId>simplecaptcha</artifactId>
 			<version>${simplecaptcha.version}</version>
 		</dependency>
+		<dependency>
+			<groupId>org.quartz-scheduler</groupId>
+			<artifactId>quartz</artifactId>
+			<version>${quartz.version}</version>
+		</dependency>      
 	</dependencies>
 	<reporting>
 		<plugins>
