@@ -16,6 +16,7 @@
 	<import resource="/data-access.xml" />
 	<import resource="/data-source.xml" />
 	<import resource="/rabbitmq.xml" />
+	<import resource="/quartz.xml" />
 
 	<!-- Mail sender -->
 	<bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">

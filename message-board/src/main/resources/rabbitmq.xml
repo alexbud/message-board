@@ -1,26 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xmlns:rabbit="http://www.springframework.org/schema/rabbit"
-	xmlns:cloud="http://schema.cloudfoundry.org/spring"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rabbit="http://www.springframework.org/schema/rabbit"
+	xmlns:cloud="http://schema.cloudfoundry.org/spring" xmlns:context="http://www.springframework.org/schema/context"
 	xsi:schemaLocation="http://schema.cloudfoundry.org/spring http://schema.cloudfoundry.org/spring/cloudfoundry-spring-0.8.xsd
 		http://www.springframework.org/schema/rabbit http://www.springframework.org/schema/rabbit/spring-rabbit-1.0.xsd
-		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.1.xsd">
-		
-	<bean id="messageConverter" class="org.springframework.amqp.support.converter.JsonMessageConverter"/>
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.1.xsd">
+
+	<context:component-scan base-package="messages.jms" />
+
+	<bean id="messageConverter"
+		class="org.springframework.amqp.support.converter.JsonMessageConverter" />
 
 	<rabbit:admin connection-factory="connectionFactory" />
-	<rabbit:template connection-factory="connectionFactory" message-converter="messageConverter"/>
-	<rabbit:queue name="messages" durable="true"/>
+	<rabbit:template connection-factory="connectionFactory"
+		message-converter="messageConverter" />
+	<rabbit:queue name="messages" durable="true" />
 
 	<beans profile="production, cloudbees, dev">
 		<rabbit:connection-factory id="connectionFactory"
 			host="localhost" username="guest" password="guest" virtual-host="/"
 			port="5672" />
 	</beans>
-	
+
 	<beans profile="cloud">
-		<cloud:rabbit-connection-factory id="connectionFactory"/>
+		<cloud:rabbit-connection-factory id="connectionFactory" />
 	</beans>
 
 </beans>
